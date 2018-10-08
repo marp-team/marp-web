@@ -22,7 +22,7 @@
     "not ie <= 11"
   ],
   "scripts": {
-    "build": "yarn --silent clean && webpack --mode=production",
+    "build": "yarn --silent clean && webpack --env.production",
     "check-ts": "tsc",
     "clean": "rimraf dist",
     "format": "prettier \"**/*.{css,js,json,md,scss,ts,yaml,yml}\"",
@@ -33,7 +33,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "version": "node version.js && git add -A CHANGELOG.md",
-    "watch": "webpack-dev-server --mode=development"
+    "watch": "webpack-dev-server"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
@@ -42,13 +42,21 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-typescript": "^7.1.0",
     "@types/jest": "^23.3.3",
+    "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.4",
     "codecov": "^3.1.0",
+    "css-loader": "^1.0.0",
+    "cssnano": "^4.1.4",
     "jest": "^23.6.0",
     "jest-junit": "^5.2.0",
     "jest-plugin-context": "^2.9.0",
+    "mini-css-extract-plugin": "^0.4.3",
+    "node-sass": "^4.9.3",
+    "postcss-loader": "^3.0.0",
     "prettier": "^1.14.3",
     "rimraf": "^2.6.2",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
     "ts-jest": "^23.10.4",
     "tslib": "^1.9.3",
     "tslint": "^5.11.0",
