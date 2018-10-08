@@ -1,0 +1,67 @@
+{
+  "name": "@marp-team/marp-web",
+  "version": "0.0.0",
+  "description": "A web interface of Marp",
+  "repository": "https://github.com/marp-team/marp-web",
+  "main": "src/index.js",
+  "author": {
+    "name": "Marp team",
+    "url": "https://github.com/marp-team"
+  },
+  "contributors": [
+    {
+      "name": "Yuki Hattori",
+      "url": "https://github.com/yhatt"
+    }
+  ],
+  "license": "MIT",
+  "private": true,
+  "browserslist": [
+    "last 2 version",
+    "not dead",
+    "not ie <= 11"
+  ],
+  "scripts": {
+    "build": "yarn --silent clean && webpack --mode=production",
+    "check-ts": "tsc",
+    "clean": "rimraf dist",
+    "format": "prettier \"**/*.{css,js,json,md,scss,ts,yaml,yml}\"",
+    "format:check": "yarn --silent format -l",
+    "format:write": "yarn --silent format --write",
+    "lint:ts": "tslint \"{src,test}/**/*.ts\"",
+    "start": "yarn --silent watch",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "version": "node version.js && git add -A CHANGELOG.md",
+    "watch": "webpack-dev-server --mode=development"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/jest": "^23.3.3",
+    "babel-loader": "^8.0.4",
+    "codecov": "^3.1.0",
+    "jest": "^23.6.0",
+    "jest-junit": "^5.2.0",
+    "jest-plugin-context": "^2.9.0",
+    "prettier": "^1.14.3",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^23.10.4",
+    "tslib": "^1.9.3",
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "^3.1.1",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.9"
+  },
+  "dependencies": {
+    "@marp-team/marp-core": "^0.0.10",
+    "incremental-dom": "^0.5.1",
+    "markdown-it-incremental-dom": "^2.0.1"
+  }
+}

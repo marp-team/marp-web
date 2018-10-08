@@ -1,0 +1,9 @@
+{
+  "extends": ["tslint-config-airbnb", "tslint-config-prettier"],
+  "rules": {
+    "curly": false,
+    "no-boolean-literal-compare": false,
+    "no-implicit-dependencies": [true, "dev"],
+    "import-name": false
+  }
+}
