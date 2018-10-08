@@ -1,9 +1,13 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const path = require('path')
 
 module.exports = env => {
   const production = !!(env || {}).production
 
   return {
+    devServer: {
+      contentBase: path.join(__dirname, 'public'),
+    },
     entry: { index: './index.js' },
     mode: production ? 'production' : 'development',
     module: {
