@@ -27,6 +27,10 @@ references:
           command: yarn check-ts
 
       - run:
+          name: stylelint
+          command: yarn lint:css
+
+      - run:
           name: TSLint
           command: yarn lint:ts
 
