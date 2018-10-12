@@ -4,6 +4,7 @@
     "isolatedModules": true,
     "lib": ["es2016", "es2017", "dom"],
     "module": "es6",
+    "moduleResolution": "node",
     "noEmit": true,
     "noImplicitAny": false,
     "sourceMap": true,

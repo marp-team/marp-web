@@ -76,7 +76,7 @@
     "webpack-dev-server": "^3.1.9"
   },
   "dependencies": {
-    "@marp-team/marp-core": "^0.0.10",
+    "@marp-team/marp-core": "^0.0.11",
     "incremental-dom": "^0.5.1",
     "markdown-it-incremental-dom": "^2.0.1"
   }

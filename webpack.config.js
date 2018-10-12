@@ -8,6 +8,7 @@ module.exports = env => {
     devServer: {
       contentBase: path.join(__dirname, 'public'),
     },
+    devtool: production ? false : 'cheap-module-source-map',
     entry: { index: './index.js' },
     mode: production ? 'production' : 'development',
     module: {
