@@ -31,6 +31,14 @@ module.exports = env => {
     },
     plugins: [new MiniCssExtractPlugin()],
     resolve: {
+      alias: {
+        // Stop bundling a huge and unnecessary esprima module
+        // https://github.com/nodeca/js-yaml/pull/435
+        'js-yaml$': path.resolve(
+          __dirname,
+          'node_modules/js-yaml/dist/js-yaml.min.js'
+        ),
+      },
       extensions: ['.ts', '.js'],
     },
   }
