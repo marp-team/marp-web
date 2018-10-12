@@ -2,8 +2,8 @@
   "name": "@marp-team/marp-web",
   "version": "0.0.0",
   "description": "A web interface of Marp",
+  "homepage": "https://web.marp.app/",
   "repository": "https://github.com/marp-team/marp-web",
-  "main": "src/index.js",
   "author": {
     "name": "Marp team",
     "url": "https://github.com/marp-team"
