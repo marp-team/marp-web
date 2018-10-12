@@ -77,7 +77,8 @@
         flex: 1;
 
         .marp__core {
-          overflow: auto;
+          overflow-x: hidden;
+          overflow-y: auto;
           -webkit-overflow-scrolling: touch;
           height: 100%;
 
