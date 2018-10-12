@@ -14,9 +14,14 @@ module.exports = env => {
     module: {
       rules: [
         {
-          test: /\.[tj]s$/,
+          test: /\.[jt]s$/,
           exclude: /node_modules/,
           use: 'babel-loader',
+        },
+        {
+          test: /\.worker\.[jt]s$/,
+          exclude: /node_modules/,
+          loader: ['worker-loader', 'babel-loader'],
         },
         {
           test: /\.(sa|sc|c)ss$/,
