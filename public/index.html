@@ -5,10 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="/index.css">
-  <script src="/index.js"></script>
   <title>Marp Web (under construction)</title>
 </head>
 <body>
-  <!-- TODO: Implement main interface -->
+  <section class="marp">
+    <header class="marp__header">
+    </header>
+    <article class="marp__contents">
+      <div class="marp__contents__editor" id="editor">
+        <textarea class="marp__contents__editor__textarea" autofocus></textarea>
+      </div>
+      <div class="marp__contents__preview" id="preview"></div>
+    </article>
+  </section>
+  <script src="/index.js"></script>
 </body>
 </html>
