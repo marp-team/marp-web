@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
-    "isolatedModules": true,
-    "lib": ["es2016", "es2017", "dom"],
+    "lib": ["es2016", "es2017", "dom", "webworker"],
     "module": "es6",
     "moduleResolution": "node",
     "noEmit": true,

@@ -1,19 +1,22 @@
 import IncrementalDOM from 'incremental-dom'
-import Marp, { ready } from './marp'
+import IncrementalDOMProxy from './marp/incremental-dom-proxy'
+import MarpManager, { ready } from './marp/manager'
 
 export default function index() {
   ready()
 
-  const marp = Marp()
+  const marpMg = new MarpManager()
   const editor = <HTMLTextAreaElement>document.getElementById('editor')
   const preview = <HTMLDivElement>document.getElementById('preview')
   const previewCSS = <HTMLStyleElement>document.getElementById('preview-css')
 
-  const render = markdown => {
-    const { html, css } = marp.render(markdown || '')
+  const render = markdown => marpMg.render(markdown || '')
+
+  marpMg.onRendered = rendered => {
+    const { html, css } = rendered
 
     if (previewCSS.textContent !== css) previewCSS.textContent = css
-    IncrementalDOM.patch(preview, html)
+    IncrementalDOMProxy.patch(IncrementalDOM, preview, html)
   }
 
   editor.addEventListener('input', () => render(editor.value))
