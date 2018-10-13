@@ -10,18 +10,18 @@ const funcs = [
 
 export type IncrementalDOMProxyBuffer = [number, any[]][]
 
-export default class IncrementalDOMProxy {
-  static patch(
-    incrementalDOM: any,
-    node: Element,
-    buffer: IncrementalDOMProxyBuffer
-  ) {
-    incrementalDOM.patch(node, () => {
-      for (const [funcIdx, args] of buffer)
-        if (funcs[funcIdx]) incrementalDOM[funcs[funcIdx]](...args)
-    })
-  }
+export function patch(
+  incrementalDOM: any,
+  node: Element,
+  buffer: IncrementalDOMProxyBuffer
+) {
+  incrementalDOM.patch(node, () => {
+    for (const [funcIdx, args] of buffer)
+      if (funcs[funcIdx]) incrementalDOM[funcs[funcIdx]](...args)
+  })
+}
 
+export default class IncrementalDOMProxy {
   private buffer: IncrementalDOMProxyBuffer
 
   constructor() {

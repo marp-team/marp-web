@@ -1,5 +1,5 @@
 import IncrementalDOM from 'incremental-dom'
-import IncrementalDOMProxy from './marp/incremental-dom-proxy'
+import { patch } from './marp/incremental-dom-proxy'
 import MarpManager from './marp/manager'
 
 export default function index() {
@@ -16,7 +16,7 @@ export default function index() {
     const renderDOM = () =>
       window.requestAnimationFrame(() => {
         if (previewCSS.textContent !== css) previewCSS.textContent = css
-        IncrementalDOMProxy.patch(IncrementalDOM, preview, html)
+        patch(IncrementalDOM, preview, html)
       })
 
     if ((<any>window).requestIdleCallback) {
