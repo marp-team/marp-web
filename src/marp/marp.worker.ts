@@ -2,6 +2,8 @@ import Marp, { MarpOptions } from '@marp-team/marp-core'
 import MarkdownItIncrementalDOM from 'markdown-it-incremental-dom'
 import IncrementalDOMProxy from './incremental-dom-proxy'
 
+const ctx: Worker = <any>self
+
 export class MarpWorker {
   readonly instances: Map<string, Marp> = new Map()
 
@@ -75,7 +77,7 @@ export class MarpWorker {
 
   private __worker__render(id: string, markdown: string) {
     const marp = this.get(id)
-    postMessage(['rendered', id, marp.render(markdown)])
+    ctx.postMessage(['rendered', id, marp.render(markdown)])
   }
 }
 
