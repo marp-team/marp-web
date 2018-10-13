@@ -34,14 +34,15 @@ export class MarpManager {
       manager[funcName].apply(manager, e.data.slice(2))
   }
 
-  readonly opts: MarpOptions
   readonly id: string
+  readonly opts: MarpOptions
 
   onRendered?: (
     rendered: { html: IncrementalDOMProxyBuffer; css: string }
   ) => void
 
   private readonly post: PostCommand
+  private renderQueue: string[] = []
 
   constructor(opts: MarpOptions = {}) {
     this.opts = opts
@@ -50,13 +51,22 @@ export class MarpManager {
   }
 
   render(markdown: string) {
-    this.post('render', markdown)
+    if (this.renderQueue.length > 0) {
+      this.renderQueue = [this.renderQueue[0], markdown]
+      console.log('skipped rendering and queued')
+    } else {
+      this.renderQueue.push(markdown)
+      this.post('render', markdown)
+    }
   }
 
   // Worker command
   // tslint:disable:function-name
   private __worker__rendered(rendered) {
     if (this.onRendered) this.onRendered(rendered)
+
+    this.renderQueue.shift()
+    if (this.renderQueue.length > 0) this.post('render', this.renderQueue[0])
   }
 }
 
