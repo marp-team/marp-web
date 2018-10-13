@@ -1,4 +1,4 @@
-import * as Marp from '../src/marp'
+import Marp from '@marp-team/marp-core'
 import index from '../src/index'
 
 beforeEach(() => {
