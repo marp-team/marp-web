@@ -81,5 +81,8 @@
     "incremental-dom": "^0.5.1",
     "markdown-it-incremental-dom": "^2.0.1",
     "uuid": "^3.3.2"
+  },
+  "resolutions": {
+    "katex": "^0.10.0-rc.1"
   }
 }
