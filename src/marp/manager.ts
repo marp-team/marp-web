@@ -1,4 +1,4 @@
-import Marp, { MarpOptions } from '@marp-team/marp-core'
+import { MarpOptions } from '@marp-team/marp-core'
 import uuid from 'uuid/v4'
 import { IncrementalDOMProxyBuffer } from './incremental-dom-proxy'
 import MarpWorker from './marp.worker.ts'
@@ -53,7 +53,6 @@ export class MarpManager {
   render(markdown: string) {
     if (this.renderQueue.length > 0) {
       this.renderQueue = [this.renderQueue[0], markdown]
-      console.log('skipped rendering and queued')
     } else {
       this.renderQueue.push(markdown)
       this.post('render', markdown)
@@ -69,7 +68,5 @@ export class MarpManager {
     if (this.renderQueue.length > 0) this.post('render', this.renderQueue[0])
   }
 }
-
-export const ready = Marp.ready
 
 export default MarpManager

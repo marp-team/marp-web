@@ -1,10 +1,8 @@
 import IncrementalDOM from 'incremental-dom'
 import IncrementalDOMProxy from './marp/incremental-dom-proxy'
-import MarpManager, { ready } from './marp/manager'
+import MarpManager from './marp/manager'
 
 export default function index() {
-  ready()
-
   const marpMg = new MarpManager()
   const editor = <HTMLTextAreaElement>document.getElementById('editor')
   const preview = <HTMLDivElement>document.getElementById('preview')
