@@ -15,10 +15,17 @@ export default function index() {
   marpMg.onRendered = rendered => {
     const { html, css } = rendered
 
-    window.requestAnimationFrame(() => {
-      if (previewCSS.textContent !== css) previewCSS.textContent = css
-      IncrementalDOMProxy.patch(IncrementalDOM, preview, html)
-    })
+    const renderDOM = () =>
+      window.requestAnimationFrame(() => {
+        if (previewCSS.textContent !== css) previewCSS.textContent = css
+        IncrementalDOMProxy.patch(IncrementalDOM, preview, html)
+      })
+
+    if ((<any>window).requestIdleCallback) {
+      ;(<any>window).requestIdleCallback(renderDOM)
+    } else {
+      renderDOM()
+    }
   }
 
   editor.addEventListener('input', () => render(editor.value))
