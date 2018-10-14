@@ -32,6 +32,16 @@ module.exports = env => {
             'sass-loader',
           ],
         },
+        {
+          test: /\.(png|gif|jpe?g|svg|woff2?|eot|ttf)$/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              name: 'assets/[name].[hash:8].[ext]',
+            },
+          },
+        },
       ],
     },
     plugins: [new MiniCssExtractPlugin()],

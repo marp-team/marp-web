@@ -76,6 +76,13 @@
         background: #f8f8f8;
         flex: 1;
 
+        &:empty {
+          background-image: url('./assets/marp-loading.svg');
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-size: 82px 40px;
+        }
+
         .marp__core {
           overflow-x: hidden;
           overflow-y: auto;
