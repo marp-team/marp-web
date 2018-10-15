@@ -14,7 +14,7 @@ export class AnimationFrame {
   }
 
   start() {
-    if (!this.dispatchedInternal) {
+    if (!this.dispatched) {
       this.dispatchedInternal = true
       this.requestAnimationFrame()
     }
@@ -36,7 +36,7 @@ export class AnimationFrame {
     // Finally trigger marp-core's fitting
     MarpBrowser(false)
 
-    if (this.dispatchedInternal) this.requestId = this.requestAnimationFrame()
+    if (this.dispatched) this.requestId = this.requestAnimationFrame()
   }
 
   private requestAnimationFrame() {
