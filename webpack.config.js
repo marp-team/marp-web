@@ -45,7 +45,14 @@ module.exports = env => {
         },
       ],
     },
-    plugins: [new MiniCssExtractPlugin(), new WorkboxPlugin.GenerateSW()],
+    plugins: [
+      new MiniCssExtractPlugin(),
+      new WorkboxPlugin.GenerateSW({
+        cacheId: 'marp-web',
+        globDirectory: production ? './dist' : './public',
+        globPatterns: ['index.html', '**/*.{png,svg}'],
+      }),
+    ],
     resolve: {
       alias: {
         // Stop bundling a huge and unnecessary esprima module
