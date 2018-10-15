@@ -1,4 +1,5 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const WorkboxPlugin = require('workbox-webpack-plugin')
 const path = require('path')
 
 module.exports = env => {
@@ -44,7 +45,7 @@ module.exports = env => {
         },
       ],
     },
-    plugins: [new MiniCssExtractPlugin()],
+    plugins: [new MiniCssExtractPlugin(), new WorkboxPlugin.GenerateSW()],
     resolve: {
       alias: {
         // Stop bundling a huge and unnecessary esprima module
