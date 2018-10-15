@@ -1,14 +1,13 @@
 import Marp, { MarpOptions } from '@marp-team/marp-core'
 import MarkdownItIncrementalDOM from 'markdown-it-incremental-dom'
 import IncrementalDOMProxy from './incremental-dom-proxy'
-
-const ctx: Worker = <any>self
+import WorkerWrapper from './worker-wrapper'
 
 export class MarpWorker {
   readonly instances: Map<string, Marp> = new Map()
 
   registerWorker() {
-    addEventListener('message', e => {
+    WorkerWrapper(self).addEventListener('message', e => {
       const func = this[`__worker__${e.data[0]}`]
       if (typeof func === 'function') func.apply(this, e.data.slice(1))
     })
@@ -77,7 +76,7 @@ export class MarpWorker {
 
   private __worker__render(id: string, markdown: string) {
     const marp = this.get(id)
-    ctx.postMessage(['rendered', id, marp.render(markdown)])
+    WorkerWrapper(self).postMessage(['rendered', id, marp.render(markdown)])
   }
 }
 

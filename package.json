@@ -44,6 +44,8 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-typescript": "^7.1.0",
     "@types/jest": "^23.3.5",
+    "@types/jest-plugin-context": "^2.9.0",
+    "@types/node": "^10.11.7",
     "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.4",
     "codecov": "^3.1.0",

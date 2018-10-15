@@ -684,10 +684,22 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.2.tgz#54c5a964462be3d4d78af631363c18d6fa91ac26"
   integrity sha512-yprFYuno9FtNsSHVlSWd+nRlmGoAbqbeCwOryP6sC/zoCjhpArcRMYp19EvpSUSizJAlsXEwJv+wcWS9XaXdMw==
 
-"@types/jest@^23.3.5":
+"@types/jest-plugin-context@^2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@types/jest-plugin-context/-/jest-plugin-context-2.9.0.tgz#70e1c1ca5c581ec6789a1774650216b6017e1b6d"
+  integrity sha512-J922XmQEUrz8+fPD/piCUDMBnC0OIDo8V7aPhAkofmJjIKYPmcn0BYUgSPfrrcXbVZtjc8SsLPoqqFdSWZPL3w==
+  dependencies:
+    "@types/jest" "*"
+
+"@types/jest@*", "@types/jest@^23.3.5":
   version "23.3.5"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.5.tgz#870a1434208b60603745bfd214fc3fc675142364"
   integrity sha512-3LI+vUC3Wju28vbjIjsTKakhMB8HC4l+tMz+Z8WRzVK+kmvezE5jcOvKtBpznWSI5KDLFo+FouUhpTKoekadCA==
+
+"@types/node@^10.11.7":
+  version "10.11.7"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.7.tgz#0e75ca9357d646ca754016ca1d68a127ad7e7300"
+  integrity sha512-yOxFfkN9xUFLyvWaeYj90mlqTJ41CsQzWKS3gXdOMOyPVacUsymejKxJ4/pMW7exouubuEeZLJawGgcNGYlTeg==
 
 "@webassemblyjs/ast@1.7.8":
   version "1.7.8"
