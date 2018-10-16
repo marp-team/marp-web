@@ -8,13 +8,14 @@ afterEach(() => jest.restoreAllMocks())
 
 describe('MarpManager', () => {
   const worker = (): jest.Mocked<Worker> => (<any>MarpManager).worker
+  const { onMessage } = <any>MarpManager
+  const post = (...data) => onMessage({ data })
 
   describe('constructor', () => {
     it('registers instance to initialized Marp Worker', () => {
       ;(<any>MarpManager).worker = undefined
 
       const manager = new MarpManager({ html: true })
-      const { onMessage } = <any>MarpManager
 
       expect(worker()).not.toBeUndefined()
       expect(worker().addEventListener).toBeCalledWith('message', onMessage)
@@ -44,6 +45,35 @@ describe('MarpManager', () => {
       manager.render('queue')
       manager.render('Only render last')
       expect(worker().postMessage).toBeCalledTimes(lastPostCalls)
+
+      // Trigger only the lastest queue after rendering
+      worker().postMessage.mockClear()
+      post('rendered', manager.id)
+
+      expect(worker().postMessage).toBeCalledWith([
+        'render',
+        manager.id,
+        'Only render last',
+      ])
+    })
+  })
+
+  describe('.onMessage (private)', () => {
+    let manager: MarpManager
+
+    beforeEach(() => {
+      manager = new MarpManager()
+      manager.onRendered = jest.fn()
+    })
+
+    it('recieves command with instance id and execute command', () => {
+      post('rendered', manager.id, { html: 'html', css: 'css' })
+      expect(manager.onRendered).toBeCalledWith({ html: 'html', css: 'css' })
+    })
+
+    it('ignores when passed invalid command', () => {
+      post('__worker__rendered', manager.id) // exact function name
+      expect(manager.onRendered).not.toBeCalled()
     })
   })
 })
