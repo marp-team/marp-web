@@ -1,6 +1,8 @@
+import animationFrame from '../src/animation-frame'
 import index, { registerServiceWorker } from '../src/index'
 import MarpManager from '../src/marp/manager'
 
+jest.mock('../src/animation-frame')
 jest.mock('../src/marp/marp.worker')
 jest.mock('../src/marp/worker-wrapper')
 
@@ -13,6 +15,11 @@ describe('#index', () => {
       <style id="preview-css"></style>
       <div id="preview"></div>
     `
+  })
+
+  it('starts animation frame loops', () => {
+    index()
+    expect(animationFrame.start).toHaveBeenCalled()
   })
 
   describe('Rendering live preview', () => {

@@ -36,11 +36,11 @@ export class AnimationFrame {
     // Finally trigger marp-core's fitting
     MarpBrowser(false)
 
-    if (this.dispatched) this.requestId = this.requestAnimationFrame()
+    if (this.dispatched) this.requestAnimationFrame()
   }
 
   private requestAnimationFrame() {
-    return window.requestAnimationFrame(() => this.loop())
+    this.requestId = window.requestAnimationFrame(() => this.loop())
   }
 }
 
