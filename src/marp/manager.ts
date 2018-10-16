@@ -6,7 +6,7 @@ import MarpWorker from './marp.worker.ts'
 type PostCommand = (command: string, ...args: any) => void
 
 export class MarpManager {
-  static worker: MarpWorker
+  private static worker?: MarpWorker
   private static instances: Map<string, MarpManager> = new Map()
 
   private static register(manager: MarpManager): PostCommand {
@@ -20,7 +20,7 @@ export class MarpManager {
 
     // Return post function
     return (command, ...args) =>
-      MarpManager.worker.postMessage([command, manager.id, ...args])
+      MarpManager.worker!.postMessage([command, manager.id, ...args])
   }
 
   private static onMessage(e: MessageEvent) {
