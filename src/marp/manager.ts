@@ -1,6 +1,6 @@
 import { MarpOptions } from '@marp-team/marp-core'
 import uuid from 'uuid/v4'
-import { IncrementalDOMProxyBuffer } from './incremental-dom-proxy'
+import { ExtendedMarp } from './marp'
 import MarpWorker from './marp.worker.ts'
 
 type PostCommand = (command: string, ...args: any) => void
@@ -37,9 +37,7 @@ export class MarpManager {
   readonly id: string
   readonly opts: MarpOptions
 
-  onRendered?: (
-    rendered: { html: IncrementalDOMProxyBuffer; css: string }
-  ) => void
+  onRendered?: (rendered: ReturnType<ExtendedMarp['render']>) => void
 
   private readonly post: PostCommand
   private renderQueue: string[] = []

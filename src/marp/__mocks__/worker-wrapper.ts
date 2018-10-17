@@ -5,4 +5,5 @@ export function createWorkerMock() {
   })
 }
 
-export default jest.fn(createWorkerMock())
+const defaultWorkerMock = createWorkerMock()()
+export default jest.fn(() => defaultWorkerMock)
