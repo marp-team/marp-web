@@ -1,4 +1,5 @@
 import './style/index.scss'
-import index from './src/'
+import index, { registerServiceWorker } from './src/'
 
+registerServiceWorker()
 index()

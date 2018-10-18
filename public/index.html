@@ -2,13 +2,37 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="/index.css">
-  <script src="/index.js"></script>
+  <meta name="msapplication-TileColor" content="#0288d1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="shortcut icon" href="/favicon.ico">
+
   <title>Marp Web (under construction)</title>
+
+  <style id="preview-css"></style>
+  <link rel="stylesheet" href="/index.css">
 </head>
 <body>
-  <!-- TODO: Implement main interface -->
+  <main class="marp">
+    <header class="marp__header">
+      <a href="https://marp.app/" target="_blank" rel="noopener">
+        <img class="marp__header__logo" src="/marp.svg" alt="Marp" width="30" height="30">
+      </a>
+    </header>
+    <article class="marp__contents">
+      <div class="marp__contents__editor">
+        <textarea class="marp__contents__editor__textarea" id="editor" autofocus></textarea>
+      </div>
+      <div class="marp__contents__preview" id="preview"></div>
+    </article>
+  </main>
+  <noscript>
+    For creating presentation with Marp, you have to enable JavaScript.
+  </noscript>
+  <script src="/index.js"></script>
 </body>
 </html>

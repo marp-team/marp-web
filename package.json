@@ -2,8 +2,8 @@
   "name": "@marp-team/marp-web",
   "version": "0.0.0",
   "description": "A web interface of Marp",
+  "homepage": "https://web.marp.app/",
   "repository": "https://github.com/marp-team/marp-web",
-  "main": "src/index.js",
   "author": {
     "name": "Marp team",
     "url": "https://github.com/marp-team"
@@ -43,17 +43,20 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-typescript": "^7.1.0",
-    "@types/jest": "^23.3.3",
+    "@types/jest": "^23.3.5",
+    "@types/jest-plugin-context": "^2.9.0",
+    "@types/node": "^10.11.7",
     "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.4",
     "codecov": "^3.1.0",
     "cpx": "^1.5.0",
     "css-loader": "^1.0.0",
     "cssnano": "^4.1.4",
+    "file-loader": "^2.0.0",
     "jest": "^23.6.0",
     "jest-junit": "^5.2.0",
     "jest-plugin-context": "^2.9.0",
-    "mini-css-extract-plugin": "^0.4.3",
+    "mini-css-extract-plugin": "^0.4.4",
     "node-sass": "^4.9.3",
     "npm-run-all": "^4.1.3",
     "postcss-loader": "^3.0.0",
@@ -70,14 +73,21 @@
     "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
-    "typescript": "^3.1.1",
+    "typescript": "^3.1.3",
+    "url-loader": "^1.1.2",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.9"
+    "webpack-dev-server": "^3.1.9",
+    "workbox-webpack-plugin": "^3.6.2",
+    "worker-loader": "^2.0.0"
   },
   "dependencies": {
-    "@marp-team/marp-core": "^0.0.10",
+    "@marp-team/marp-core": "^0.0.12",
     "incremental-dom": "^0.5.1",
-    "markdown-it-incremental-dom": "^2.0.1"
+    "markdown-it-incremental-dom": "^2.0.1",
+    "uuid": "^3.3.2"
+  },
+  "resolutions": {
+    "katex": "^0.10.0-rc.1"
   }
 }
