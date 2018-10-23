@@ -4,19 +4,30 @@ import { patch } from './marp/incremental-dom-proxy'
 import MarpManager from './marp/manager'
 
 export default function index() {
-  const marpMg = new MarpManager()
-  const editor = <HTMLTextAreaElement>document.getElementById('editor')
-  const preview = <HTMLDivElement>document.getElementById('preview')
-  const previewCSS = <HTMLStyleElement>document.getElementById('preview-css')
+  initializePreview(
+    <HTMLTextAreaElement>document.getElementById('editor'),
+    <HTMLDivElement>document.getElementById('preview'),
+    <HTMLStyleElement>document.getElementById('preview-css')
+  )
+  initializeMenu()
 
-  const render = markdown => marpMg.render(markdown || '')
+  animationFrame.start()
+}
 
-  marpMg.onRendered = rendered => {
+function initializePreview(
+  editor: HTMLTextAreaElement,
+  preview: HTMLElement,
+  style: HTMLStyleElement
+) {
+  const marpManager = new MarpManager()
+  const render = markdown => marpManager.render(markdown || '')
+
+  marpManager.onRendered = rendered => {
     const { html, css } = rendered
 
     const renderDOM = () =>
       animationFrame.push(() => {
-        if (previewCSS.textContent !== css) previewCSS.textContent = css
+        if (style.textContent !== css) style.textContent = css
         patch(IncrementalDOM, preview, html)
       })
 
@@ -29,8 +40,14 @@ export default function index() {
 
   editor.addEventListener('input', () => render(editor.value))
   render(editor.value)
+}
 
-  animationFrame.start()
+function initializeMenu() {
+  const menu = <HTMLButtonElement>document.getElementById('menu')
+
+  menu.addEventListener('click', () => {
+    menu.parentElement!.classList.toggle('marp__menu--open')
+  })
 }
 
 export function registerServiceWorker() {

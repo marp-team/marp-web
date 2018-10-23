@@ -19,9 +19,16 @@
 <body>
   <main class="marp">
     <header class="marp__header">
-      <a href="https://marp.app/" target="_blank" rel="noopener">
-        <img class="marp__header__logo" src="/marp.svg" alt="Marp" width="30" height="30">
-      </a>
+      <nav class="marp__menu marp__menu--main">
+        <button id="menu" class="marp__menu__button" aria-haspopup="true" aria-controls="dropdown-menu">
+          Marp
+        </button>
+        <ul class="marp__menu__list">
+          <li>
+            <button class="marp__menu__list__item">Open local file...</button>
+          </li>
+        </ul>
+      </nav>
     </header>
     <article class="marp__contents">
       <div class="marp__contents__editor">
