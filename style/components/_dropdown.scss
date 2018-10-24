@@ -18,7 +18,7 @@
     top: 100%;
 
     &__item {
-      button {
+      &__button {
         appearance: none;
         background-color: #fff;
         border: 0;
@@ -34,10 +34,10 @@
         width: 100%;
 
         &:hover {
-          background-color: rgba(#000, 0.05);
+          background-color: mix(#000, #fff, 5%);
 
           &:active {
-            background-color: rgba(#000, 0.1);
+            background-color: mix(#000, #fff, 10%);
           }
         }
       }

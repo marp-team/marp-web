@@ -54,6 +54,7 @@ export class Dropdown {
 
       if (item) {
         const btn = document.createElement('button')
+        btn.classList.add('marp__dropdown__list__item__button')
         btn.textContent = item.label
 
         listItem.appendChild(btn)

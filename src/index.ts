@@ -11,9 +11,12 @@ export default function index() {
 
   // Main menu
   new Dropdown(document.getElementById('menu')!, [
-    {
-      label: 'Open local file...',
-    },
+    { label: 'New' },
+    undefined,
+    { label: 'Open...' },
+    { label: 'Save as local file' },
+    undefined,
+    { label: 'Print / Export to PDF' },
   ])
 }
 
