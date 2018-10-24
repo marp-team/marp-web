@@ -28,7 +28,7 @@
     "format": "prettier \"**/*.{css,js,jsx,json,md,scss,ts,tsx,yaml,yml}\"",
     "format:check": "yarn --silent format -l",
     "format:write": "yarn --silent format --write",
-    "lint:css": "stylelint \"style/**/*.{css,scss}\"",
+    "lint:css": "stylelint \"{src,style}/**/*.{css,scss}\"",
     "lint:ts": "tslint \"{src,test}/**/*.{ts,tsx}\"",
     "preversion": "npm-run-all --npm-path yarn --parallel check-ts format:check lint:* test:coverage",
     "start": "yarn --silent watch",
