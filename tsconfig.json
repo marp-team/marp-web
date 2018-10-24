@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
+    "jsx": "preserve",
     "lib": ["es2016", "es2017", "dom"],
     "module": "es6",
     "moduleResolution": "node",
