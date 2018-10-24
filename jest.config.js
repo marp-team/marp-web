@@ -1,12 +1,21 @@
 const { jestPreset } = require('ts-jest')
 
 module.exports = {
-  collectCoverageFrom: ['src/**/*.ts'],
+  collectCoverageFrom: ['src/**/*.ts', 'src/**/*.tsx'],
   coveragePathIgnorePatterns: ['/node_modules/', '.*\\.d\\.ts'],
   coverageThreshold: { global: { lines: 95 } },
-  moduleFileExtensions: ['ts', 'js', 'json', 'node'],
+  globals: {
+    'ts-jest': {
+      tsConfig: {
+        jsx: 'react',
+        jsxFactory: 'h',
+      },
+    },
+  },
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  moduleNameMapper: { '\\.module\\.(c|sc|sa)ss$': 'identity-obj-proxy' },
   setupFiles: ['jest-plugin-context/setup'],
   transform: jestPreset.transform,
   testEnvironment: 'jsdom',
-  testRegex: '(/(test|__tests__)/(?!_).*|(\\.|/)(test|spec))\\.[jt]s$',
+  testRegex: '(/(test|__tests__)/(?!_).*|(\\.|/)(test|spec))\\.[jt]sx?$',
 }

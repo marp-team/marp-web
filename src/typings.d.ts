@@ -4,3 +4,10 @@ declare module '*.worker.ts' {
   }
   export default WorkerLoaderWorker
 }
+
+declare module '*.module.scss' {
+  const cssModule: {
+    [className: string]: string
+  }
+  export default cssModule
+}

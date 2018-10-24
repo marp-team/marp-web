@@ -5,6 +5,19 @@ const path = require('path')
 module.exports = env => {
   const production = !!(env || {}).production
 
+  const cssLoaders = modules => [
+    production ? MiniCssExtractPlugin.loader : 'style-loader',
+    {
+      loader: 'css-loader',
+      options: {
+        modules,
+        importLoaders: 2,
+      },
+    },
+    'postcss-loader',
+    'sass-loader',
+  ]
+
   return {
     devServer: {
       contentBase: path.join(__dirname, 'public'),
@@ -15,23 +28,23 @@ module.exports = env => {
     module: {
       rules: [
         {
-          test: /\.[jt]s$/,
+          test: /\.[jt]sx?$/,
           exclude: /node_modules/,
           use: 'babel-loader',
         },
         {
-          test: /\.worker\.[jt]s$/,
+          test: /\.worker\.[jt]sx?$/,
           exclude: /node_modules/,
           loader: ['worker-loader', 'babel-loader'],
         },
         {
+          test: /\.module\.(sa|sc|c)ss$/,
+          use: cssLoaders(true),
+        },
+        {
           test: /\.(sa|sc|c)ss$/,
-          use: [
-            production ? MiniCssExtractPlugin.loader : 'style-loader',
-            { loader: 'css-loader', options: { importLoaders: 2 } },
-            'postcss-loader',
-            'sass-loader',
-          ],
+          exclude: /\.module\.(sa|sc|c)ss$/,
+          use: cssLoaders(false),
         },
         {
           test: /\.(png|gif|jpe?g|svg|woff2?|eot|ttf)$/,
@@ -63,7 +76,7 @@ module.exports = env => {
           'node_modules/js-yaml/dist/js-yaml.min.js'
         ),
       },
-      extensions: ['.ts', '.js'],
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
     },
   }
 }
