@@ -1,3 +1,4 @@
+import { Dropdown } from './components/dropdown'
 import Preview from './preview'
 
 export default function index() {
@@ -8,15 +9,12 @@ export default function index() {
     style: <HTMLStyleElement>document.getElementById('preview-css'),
   })
 
-  initializeMenu()
-}
-
-function initializeMenu() {
-  const menu = <HTMLButtonElement>document.getElementById('menu')
-
-  menu.addEventListener('click', () => {
-    menu.parentElement!.classList.toggle('marp__menu--open')
-  })
+  // Main menu
+  new Dropdown(document.getElementById('menu')!, [
+    {
+      label: 'Open local file...',
+    },
+  ])
 }
 
 export function registerServiceWorker() {

@@ -6,6 +6,8 @@ $marp-font-size: 16px;
   height: 100%;
   width: 100%;
 
+  @import './components/dropdown';
+
   &__header {
     background: #fff;
     box-shadow: 0 1px 2px rgba(#000, 0.1);
@@ -22,77 +24,28 @@ $marp-font-size: 16px;
     position: relative;
     display: inline-block;
 
-    &__button,
-    &__list__item {
-      appearance: none;
-      background-color: transparent;
-      border: 0;
-      cursor: pointer;
-      display: block;
-      outline: 0;
-      text-align: left;
-    }
-
     &__button {
+      appearance: none;
+      background-color: #fff;
       background-image: url('./assets/marp.svg');
       background-position: center;
       background-repeat: no-repeat;
       background-size: 30px 30px;
+      border: 0;
+      cursor: pointer;
+      display: block;
       height: 0;
+      outline: 0;
       overflow: hidden;
       padding: 50px 0 0 0;
       width: 50px;
 
       &:hover {
-        background-color: rgba(#000, 0.05);
+        background-color: mix(#000, #fff, 5%);
 
         &:active {
-          background-color: rgba(#000, 0.1);
+          background-color: mix(#000, #fff, 10%);
         }
-      }
-    }
-
-    &__list {
-      background: #fff;
-      border: 1px solid #eee;
-      box-shadow: 0 2px 2px rgba(#000, 0.15);
-      display: none;
-      left: 0;
-      list-style: none;
-      margin: 0;
-      padding: 5px 0;
-      position: absolute;
-      top: 100%;
-
-      &__item {
-        height: 40px;
-        font-size: $marp-font-size;
-        line-height: 26px;
-        min-width: 250px;
-        padding: 7px 15px;
-        white-space: nowrap;
-
-        &:hover {
-          background-color: rgba(#000, 0.05);
-
-          &:active {
-            background-color: rgba(#000, 0.1);
-          }
-        }
-      }
-    }
-
-    &#{$self}--open {
-      #{$self}__button {
-        &,
-        &:hover,
-        &:active {
-          background-color: rgba(#000, 0.1);
-        }
-      }
-
-      #{$self}__list {
-        display: block;
       }
     }
   }

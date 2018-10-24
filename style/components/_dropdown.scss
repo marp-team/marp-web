@@ -1,0 +1,57 @@
+&__dropdown {
+  $self: #{&};
+
+  outline: 0;
+  position: relative;
+  user-select: none;
+
+  &__list {
+    background: #fff;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 2px rgba(#000, 0.15);
+    display: none;
+    left: 0;
+    list-style: none;
+    margin: 0;
+    padding: 7px 0;
+    position: absolute;
+    top: 100%;
+
+    &__item {
+      button {
+        appearance: none;
+        background-color: #fff;
+        border: 0;
+        display: block;
+        font-size: $marp-font-size;
+        height: 40px;
+        line-height: 26px;
+        min-width: 250px;
+        outline: 0;
+        padding: 7px 15px;
+        text-align: left;
+        white-space: nowrap;
+        width: 100%;
+
+        &:hover {
+          background-color: rgba(#000, 0.05);
+
+          &:active {
+            background-color: rgba(#000, 0.1);
+          }
+        }
+      }
+
+      &--divider {
+        border-top: 1px solid #eee;
+        margin: 7px 0;
+      }
+    }
+  }
+
+  &--open {
+    #{$self}__list {
+      display: block;
+    }
+  }
+}
