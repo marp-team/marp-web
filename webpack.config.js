@@ -11,6 +11,8 @@ module.exports = env => {
       loader: 'css-loader',
       options: {
         modules,
+        camelCase: true,
+        sourceMap: !production,
         importLoaders: 2,
       },
     },

@@ -1,12 +1,14 @@
+@import '../../style/variables';
+
 .header {
+  display: flex;
   box-sizing: border-box;
-  text-align: center;
   height: 50px;
-  padding: 10px;
 }
 
-.logo {
-  height: 30px;
-  outline: 0;
-  width: 30px;
+.menu-button {
+  background-image: url('../../style/assets/marp.svg');
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
