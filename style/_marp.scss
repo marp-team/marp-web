@@ -1,0 +1,164 @@
+$marp-font-size: 16px;
+
+@media screen {
+  font-size: $marp-font-size;
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  &__header {
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(#000, 0.1);
+    display: flex;
+    height: 50px;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__menu {
+    $self: #{&};
+
+    flex: 0 0 50px;
+    position: relative;
+    display: inline-block;
+
+    &__button,
+    &__list__item {
+      appearance: none;
+      background-color: transparent;
+      border: 0;
+      cursor: pointer;
+      display: block;
+      outline: 0;
+      text-align: left;
+    }
+
+    &__button {
+      background-image: url('./assets/marp.svg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 30px 30px;
+      height: 0;
+      overflow: hidden;
+      padding: 50px 0 0 0;
+      width: 50px;
+
+      &:hover {
+        background-color: rgba(#000, 0.05);
+
+        &:active {
+          background-color: rgba(#000, 0.1);
+        }
+      }
+    }
+
+    &__list {
+      background: #fff;
+      border: 1px solid #eee;
+      box-shadow: 0 2px 2px rgba(#000, 0.15);
+      display: none;
+      left: 0;
+      list-style: none;
+      margin: 0;
+      padding: 5px 0;
+      position: absolute;
+      top: 100%;
+
+      &__item {
+        height: 40px;
+        font-size: $marp-font-size;
+        line-height: 26px;
+        min-width: 250px;
+        padding: 7px 15px;
+        white-space: nowrap;
+
+        &:hover {
+          background-color: rgba(#000, 0.05);
+
+          &:active {
+            background-color: rgba(#000, 0.1);
+          }
+        }
+      }
+    }
+
+    &#{$self}--open {
+      #{$self}__button {
+        &,
+        &:hover,
+        &:active {
+          background-color: rgba(#000, 0.1);
+        }
+      }
+
+      #{$self}__list {
+        display: block;
+      }
+    }
+  }
+
+  &__contents {
+    bottom: 0;
+    display: flex;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    z-index: 0;
+
+    &__editor {
+      flex: 1;
+
+      &__textarea {
+        background: #fff;
+        border: 0;
+        outline: 0;
+        display: block;
+        font-size: $marp-font-size;
+        height: 100%;
+        margin: 0;
+        padding: 30px;
+        resize: none;
+        width: 100%;
+      }
+    }
+
+    &__preview {
+      background: #f8f8f8;
+      flex: 1;
+
+      &:empty {
+        background-image: url('./assets/marp-loading.svg');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 82px 40px;
+      }
+
+      .marp__core {
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        height: 100%;
+
+        > svg {
+          box-shadow: 0 5px 10px rgba(#000, 0.25);
+          display: block;
+          margin: 50px;
+          transform: translateZ(0); // rendering hack
+        }
+      }
+    }
+  }
+}
+
+@media print {
+  &__header {
+    display: none;
+  }
+
+  &__contents {
+    &__editor {
+      display: none;
+    }
+  }
+}
