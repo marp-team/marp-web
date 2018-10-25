@@ -20,7 +20,7 @@ module.exports = env => {
     {
       loader: 'sass-loader',
       options: {
-        data: modules && '@import "variables";',
+        data: modules && '@import "initialization";',
         includePaths: [path.join(__dirname, 'style')],
       },
     },

@@ -4,33 +4,16 @@ import { combineClass } from './utils'
 
 const { Component, h } = preact
 
-export interface DropdownProps {
-  children: any[]
-}
+export class Dropdown extends Component<any, { open: boolean }> {
+  private container?: HTMLDivElement
 
-export interface DropdownStates {
-  open: boolean
-}
-
-export class Dropdown extends Component<DropdownProps, DropdownStates> {
-  private readonly contents: any[]
-  private readonly menu: any
-
-  constructor(props: DropdownProps) {
+  constructor(props) {
     super(props)
-
     this.state = { open: false }
-    this.contents = [...props.children]
-
-    // Extract DropdownMenu from children
-    const menuIdx = this.contents.findIndex(
-      elm => typeof elm === 'object' && elm.nodeName === DropdownMenu
-    )
-    this.menu = menuIdx === -1 ? undefined : this.contents.splice(menuIdx, 1)[0]
   }
 
   getChildContext() {
-    return { dropdown: this }
+    return { dropdown: this, dropdownOpen: this.state.open }
   }
 
   close() {
@@ -41,51 +24,64 @@ export class Dropdown extends Component<DropdownProps, DropdownStates> {
     this.setState({ open: true })
   }
 
-  toggle() {
-    this.setState({ open: !this.state.open })
+  toggle(from = this.state.open) {
+    this.setState({ open: !from })
   }
 
-  render(_, state: DropdownStates) {
-    const { open } = state
+  handleFocusOut(e) {
+    this.setState({
+      open: this.container ? this.container.contains(e.relatedTarget) : false,
+    })
+  }
 
+  render(props) {
     return (
-      <span class={style.dropdown}>
-        <span class={style.dropdownHit} onClick={() => this.toggle()}>
-          {this.contents}
-        </span>
-        {open && this.menu}
-      </span>
+      <div
+        {...props}
+        class={style.dropdown}
+        ref={div => (this.container = div)}
+        onFocusOut={e => this.handleFocusOut(e)}
+      />
     )
   }
 }
 
-export class DropdownMenu extends Component<{}, {}> {
-  render(props) {
-    return <ul role="menu" {...props} class={combineClass(props, style.menu)} />
-  }
+export function DropdownMenu(this, props: { children: any }) {
+  return (
+    this.context.dropdownOpen && (
+      <ul
+        role="menu"
+        tabIndex={-1}
+        {...props}
+        class={combineClass(props, style.menu)}
+      />
+    )
+  )
 }
 
-export function DropdownItem(this: any, props) {
+export function DropdownItem(
+  this,
+  props: { children: any; onClick?: () => any }
+) {
   const { onClick } = props
+  const handleClick = () => {
+    this.context.dropdown.close()
+
+    if (typeof onClick === 'function') {
+      if ((window as any).requestIdleCallback) {
+        ;(window as any).requestIdleCallback(() => onClick())
+      } else {
+        setTimeout(() => onClick(), 0)
+      }
+    }
+  }
 
   return (
     <li role="menuitem" class={style.item}>
       <button
         {...props}
         class={combineClass(props, style.itemButton)}
-        onClick={(...args) => {
-          this.context.dropdown.close()
-
-          if (typeof onClick === 'function') {
-            const callback = () => onClick(...args)
-
-            if ((window as any).requestIdleCallback) {
-              ;(window as any).requestIdleCallback(callback)
-            } else {
-              setTimeout(callback, 0)
-            }
-          }
-        }}
+        onClick={handleClick}
       />
     </li>
   )

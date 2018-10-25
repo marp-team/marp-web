@@ -3,19 +3,11 @@ $dropdown-gap-horizontal: $base-font-size;
 
 .dropdown {
   position: relative;
-
-  &-hit {
-    display: inline;
-    display: contents;
-    pointer-events: none;
-
-    * {
-      pointer-events: auto;
-    }
-  }
 }
 
 .menu {
+  @include remove-focus-ring;
+
   background-color: #fff;
   border: 1px solid #eee;
   box-shadow: 0 2px 2px rgba(#000, 0.15);
@@ -32,15 +24,17 @@ $dropdown-gap-horizontal: $base-font-size;
   display: block;
 
   &-button {
+    @include remove-focus-ring;
+
     appearance: none;
     background-color: #fff;
     border: 0;
     display: block;
     font-size: $base-font-size;
     line-height: $base-font-size;
-    outline: 0;
     padding: $dropdown-gap-vertical $dropdown-gap-horizontal;
     text-align: left;
+    user-select: none;
     white-space: nowrap;
     width: 100%;
 

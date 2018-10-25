@@ -13,6 +13,7 @@
 
 .button {
   @include button-color(#fff, #eee);
+  @include remove-focus-ring;
 
   appearance: none;
   border-radius: 3px;
@@ -24,7 +25,6 @@
   display: inline-block;
   font-size: $base-font-size;
   margin: 0;
-  outline: 0;
   padding: ($base-font-size / 2) $base-font-size;
   position: relative;
   text-align: left;
