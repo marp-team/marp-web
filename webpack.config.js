@@ -17,7 +17,13 @@ module.exports = env => {
       },
     },
     'postcss-loader',
-    'sass-loader',
+    {
+      loader: 'sass-loader',
+      options: {
+        data: modules && '@import "variables";',
+        includePaths: [path.join(__dirname, 'style')],
+      },
+    },
   ]
 
   return {
