@@ -1,12 +1,27 @@
-// tslint:disable:variable-name
 import * as preact from 'preact'
-import { Button, HeaderButton } from './button'
+import { HeaderButton } from './button'
+import {
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
+  DropdownDivider,
+} from './dropdown'
 import style from './header.module.scss'
 
 const { h } = preact
 
 export default () => (
   <header class={style.header}>
-    <HeaderButton class={style.menuButton} />
+    <Dropdown>
+      <HeaderButton class={style.menuButton} />
+      <DropdownMenu>
+        <DropdownItem>New</DropdownItem>
+        <DropdownDivider />
+        <DropdownItem>Open...</DropdownItem>
+        <DropdownItem>Save</DropdownItem>
+        <DropdownDivider />
+        <DropdownItem>Print / Export to PDF</DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
   </header>
 )
