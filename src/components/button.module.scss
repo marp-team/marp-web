@@ -31,6 +31,11 @@
   transition: box-shadow 0.1s linear;
   white-space: nowrap;
 
+  &,
+  &:active {
+    color: inherit;
+  }
+
   &:focus {
     box-shadow: 0 0 0 2px rgba($brand-primary, 0.5), 0 3px 6px rgba(#000, 0.2);
   }

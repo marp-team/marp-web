@@ -38,6 +38,11 @@ $dropdown-gap-horizontal: $base-font-size;
     white-space: nowrap;
     width: 100%;
 
+    &,
+    &:active {
+      color: inherit;
+    }
+
     &:focus,
     &:hover {
       background-color: mix(#000, #fff, 5%);

@@ -22,7 +22,8 @@ export default () => {
       <Dropdown ref={elm => (mainMenu = elm)}>
         <HeaderButton
           class={style.menuButton}
-          onClick={() => mainMenu.toggle()}
+          onClick={e => mainMenu.handleButtonClick(e)}
+          onMouseDown={e => mainMenu.handleButtonMouseDown(e)}
         />
         <DropdownMenu>
           <DropdownItem>New</DropdownItem>

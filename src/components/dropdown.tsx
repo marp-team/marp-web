@@ -6,6 +6,7 @@ const { Component, h } = preact
 
 export class Dropdown extends Component<any, { open: boolean }> {
   private container?: HTMLDivElement
+  private mouseDownButton?: Element
 
   constructor(props) {
     super(props)
@@ -28,10 +29,24 @@ export class Dropdown extends Component<any, { open: boolean }> {
     this.setState({ open: !from })
   }
 
-  handleFocusOut(e) {
-    this.setState({
-      open: this.container ? this.container.contains(e.relatedTarget) : false,
-    })
+  handleButtonClick(e) {
+    this.toggle()
+
+    // Keep focus to button after clicking in macOS Firefox and Safari
+    // See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#Clicking_and_focus
+    e.target.focus()
+  }
+
+  handleButtonMouseDown(e) {
+    this.mouseDownButton = e.target
+    setTimeout(() => (this.mouseDownButton = undefined), 0)
+  }
+
+  private handleFocusOut(e) {
+    if (!this.mouseDownButton)
+      this.setState({
+        open: this.container ? this.container.contains(e.relatedTarget) : false,
+      })
   }
 
   render(props) {
