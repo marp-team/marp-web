@@ -21,7 +21,7 @@ export default () => {
     <header class={style.header}>
       <Dropdown ref={elm => (mainMenu = elm)}>
         <HeaderButton
-          class={style.menuButton}
+          class={style.appButton}
           onClick={e => mainMenu.handleButtonClick(e)}
           onMouseDown={e => mainMenu.handleButtonMouseDown(e)}
         />
