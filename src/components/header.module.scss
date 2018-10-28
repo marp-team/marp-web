@@ -1,14 +1,18 @@
-@import '../../style/variables';
-
 .header {
   display: flex;
   box-sizing: border-box;
   height: 50px;
 }
 
-.menu-button {
+.app-button {
   background-image: url('../../style/assets/marp.svg');
   background-size: 30px 30px;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+@media print {
+  .header {
+    display: none;
+  }
 }

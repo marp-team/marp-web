@@ -1,5 +1,3 @@
-@import '../../style/variables';
-
 @mixin button-color($base, $border, $highlight: #000) {
   background-color: $base;
   border-color: $border;
@@ -15,6 +13,7 @@
 
 .button {
   @include button-color(#fff, #eee);
+  @include remove-focus-ring;
 
   appearance: none;
   border-radius: 3px;
@@ -26,15 +25,19 @@
   display: inline-block;
   font-size: $base-font-size;
   margin: 0;
-  outline: 0;
   padding: ($base-font-size / 2) $base-font-size;
   position: relative;
   text-align: left;
   transition: box-shadow 0.1s linear;
   white-space: nowrap;
 
+  &,
+  &:active {
+    color: inherit;
+  }
+
   &:focus {
-    box-shadow: 0 0 0 2px rgba(#69c, 0.5), 0 3px 6px rgba(#000, 0.2);
+    box-shadow: 0 0 0 2px rgba($brand-primary, 0.5), 0 3px 6px rgba(#000, 0.2);
   }
 }
 

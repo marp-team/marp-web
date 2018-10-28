@@ -15,7 +15,9 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   moduleNameMapper: { '\\.module\\.(c|sc|sa)ss$': 'identity-obj-proxy' },
   setupFiles: ['jest-plugin-context/setup'],
+  snapshotSerializers: ['preact-render-spy/snapshot'],
   transform: jestPreset.transform,
   testEnvironment: 'jsdom',
+  testPathIgnorePatterns: ['/node_modules/', 'd.ts$'],
   testRegex: '(/(test|__tests__)/(?!_).*|(\\.|/)(test|spec))\\.[jt]sx?$',
 }

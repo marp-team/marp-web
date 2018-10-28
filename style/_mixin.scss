@@ -1,0 +1,11 @@
+@mixin remove-focus-ring {
+  outline: 0;
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}
