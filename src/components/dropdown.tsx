@@ -52,8 +52,7 @@ export class Dropdown extends Component<any, { open: boolean }> {
   render(props) {
     return (
       <div
-        {...props}
-        class={style.dropdown}
+        {...combineClass(props, style.dropdown)}
         ref={div => (this.container = div)}
         onFocusOut={e => this.handleFocusOut(e)}
       />
@@ -64,12 +63,7 @@ export class Dropdown extends Component<any, { open: boolean }> {
 export function DropdownMenu(this, props: { children: any }) {
   return (
     this.context.dropdownOpen && (
-      <ul
-        role="menu"
-        tabIndex={-1}
-        {...props}
-        class={combineClass(props, style.menu)}
-      />
+      <ul role="menu" tabIndex={-1} {...combineClass(props, style.menu)} />
     )
   )
 }
@@ -81,21 +75,13 @@ export function DropdownItem(
   const { onClick } = props
   const handleClick = () => {
     this.context.dropdown.close()
-
-    if (typeof onClick === 'function') {
-      if ((window as any).requestIdleCallback) {
-        ;(window as any).requestIdleCallback(() => onClick())
-      } else {
-        setTimeout(() => onClick(), 0)
-      }
-    }
+    if (typeof onClick === 'function') setTimeout(() => onClick(), 16)
   }
 
   return (
     <li role="menuitem" class={style.item}>
       <button
-        {...props}
-        class={combineClass(props, style.itemButton)}
+        {...combineClass(props, style.itemButton)}
         onClick={handleClick}
       />
     </li>

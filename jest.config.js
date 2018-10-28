@@ -18,5 +18,6 @@ module.exports = {
   snapshotSerializers: ['preact-render-spy/snapshot'],
   transform: jestPreset.transform,
   testEnvironment: 'jsdom',
+  testPathIgnorePatterns: ['/node_modules/', 'd.ts$'],
   testRegex: '(/(test|__tests__)/(?!_).*|(\\.|/)(test|spec))\\.[jt]sx?$',
 }
