@@ -1,4 +1,3 @@
-import { detect } from 'detect-browser'
 import * as preact from 'preact'
 import { HeaderButton } from './button'
 import {
@@ -7,12 +6,10 @@ import {
   DropdownItem,
   DropdownDivider,
 } from './dropdown'
+import { isChrome } from './utils'
 import style from './header.module.scss'
 
 const { h } = preact
-
-const detected = detect()
-const isChrome = detected && detected.name === 'chrome'
 
 export default () => {
   let mainMenu: Dropdown
@@ -33,7 +30,7 @@ export default () => {
           <DropdownDivider />
           <DropdownItem onClick={() => window.print()}>
             Print
-            {isChrome && ' / Export to PDF'}
+            {isChrome() && ' / Export to PDF'}
             ...
           </DropdownItem>
         </DropdownMenu>
