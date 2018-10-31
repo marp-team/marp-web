@@ -1,0 +1,22 @@
+.editor {
+  resize: none;
+}
+
+.marp {
+  &-editor {
+    background: #fff;
+    border: 0;
+    box-sizing: border-box;
+    outline: 0;
+    display: block;
+    font-size: $base-font-size;
+    height: 100%;
+    margin: 0;
+    padding: 30px;
+    width: 100%;
+
+    &-container {
+      flex: 1;
+    }
+  }
+}

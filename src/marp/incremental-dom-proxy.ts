@@ -15,10 +15,17 @@ export function patch(
   node: Element,
   buffer: IncrementalDOMProxyBuffer
 ) {
-  incrementalDOM.patch(node, () => {
+  incrementalDOM.patch(node, convert(incrementalDOM, buffer))
+}
+
+export function convert(
+  incrementalDOM: any,
+  buffer: IncrementalDOMProxyBuffer
+) {
+  return () => {
     for (const [funcIdx, args] of buffer)
       if (funcs[funcIdx]) incrementalDOM[funcs[funcIdx]](...args)
-  })
+  }
 }
 
 export default class IncrementalDOMProxy {

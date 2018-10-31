@@ -22,10 +22,7 @@ export type ExtendedMarp = Overwrite<
 >
 
 export default function createMarp(opts: MarpOptions = {}): ExtendedMarp {
-  const marp: ExtendedMarp = <any>new Marp({
-    ...opts,
-    container: { tag: 'div', class: 'marp__core' },
-  })
+  const marp: ExtendedMarp = <any>new Marp({ ...opts })
   const proxy = new IncrementalDOMProxy()
 
   // Incremental DOM

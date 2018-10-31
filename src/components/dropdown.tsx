@@ -1,5 +1,5 @@
 import * as preact from 'preact'
-import style from './dropdown.module.scss'
+import style from './style/dropdown.module.scss'
 import { combineClass } from './utils'
 
 const { Component, h } = preact

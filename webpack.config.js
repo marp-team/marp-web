@@ -11,9 +11,9 @@ module.exports = env => {
       loader: 'css-loader',
       options: {
         modules,
-        camelCase: true,
-        sourceMap: !production,
+        camelCase: 'only',
         importLoaders: 2,
+        localIdentName: '[hash:base64:5]',
       },
     },
     'postcss-loader',

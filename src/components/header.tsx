@@ -7,7 +7,7 @@ import {
   DropdownDivider,
 } from './dropdown'
 import { isChrome } from './utils'
-import style from './header.module.scss'
+import style from './style/header.module.scss'
 
 const { h } = preact
 
