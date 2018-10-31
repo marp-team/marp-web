@@ -37,7 +37,11 @@ export default class Editor extends Component<EditorProps, EditorStates> {
         {...combineClass(this.props, style.editor)}
         onInput={this.handleInput}
         value={this.state.value}
-      />
+      >
+        {/* Prevent moving caret unexpectedly in Microsoft Edge
+          * https://github.com/developit/preact/issues/326#issuecomment-375513643 */}
+        {this.state.value}
+      </textarea>
     )
   }
 }
