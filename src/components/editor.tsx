@@ -5,7 +5,7 @@ import { combineClass } from './utils'
 const { Component, h } = preact
 
 export interface EditorProps {
-  onInput?: JSX.DOMAttributes['onInput']
+  onInput?: JSX.EventHandler<Event>
   value?: string
   [key: string]: any
 }
@@ -21,12 +21,10 @@ export default class Editor extends Component<EditorProps, EditorStates> {
 
   constructor(props) {
     super(props)
-
     this.state = { value: props.value }
-    this.handleInput = this.handleInput.bind(this)
   }
 
-  handleInput(e: any) {
+  handleInput = (e: any) => {
     const { onInput } = this.props
     this.setState({ value: e.target.value }, () => onInput && onInput(e))
   }

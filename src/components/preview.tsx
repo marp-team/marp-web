@@ -20,12 +20,10 @@ export default class Preview extends Component<PreviewProps, PreviewStates> {
 
   constructor(props) {
     super(props)
-
     this.state = { value: props.value }
-    this.handleInput = this.handleInput.bind(this)
   }
 
-  handleInput(e: any) {
+  handleInput = (e: any) => {
     this.setState({ value: e.target.value })
   }
 
