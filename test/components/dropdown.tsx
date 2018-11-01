@@ -2,22 +2,26 @@ import { h } from 'preact'
 import { deep, RenderContext, FindWrapper } from 'preact-render-spy'
 import {
   Dropdown,
-  DropdownMenu,
   DropdownItem,
+  DropdownItemProps,
+  DropdownMenu,
 } from '../../src/components/dropdown'
-import style from '../../src/components/dropdown.module.scss'
+import style from '../../src/components/style/dropdown.module.scss'
 
 jest.useFakeTimers()
 
 describe('Dropdown components', () => {
-  const dropdown = (props = {}, itemProps = {}) =>
-    deep(
-      <Dropdown {...props}>
+  const dropdown = (props = {}, itemProps = {}) => {
+    const renderDummyButton = () => <span />
+
+    return deep(
+      <Dropdown button={renderDummyButton} {...props}>
         <DropdownMenu>
           <DropdownItem {...itemProps}>test</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     )
+  }
 
   describe('<Dropdown />', () => {
     it('renders <div> with dropdown class', () => {
@@ -34,6 +38,61 @@ describe('Dropdown components', () => {
         expect(div).toHaveLength(1)
         expect(div.attr('class')).toContain('test')
         expect(div.attr('class')).toContain(style.dropdown)
+      })
+    })
+
+    context('with button prop', () => {
+      const component = (rests = {}) =>
+        dropdown({
+          ...rests,
+          button: ({ props }) => <button id="btn-test" {...props} />,
+        })
+
+      it('renders button by passed function', () =>
+        expect(component().find(<button id="btn-test" />)).toHaveLength(1))
+
+      it('can attach mouse events passed by props', () => {
+        const btn: FindWrapper<any, any> = component().find('button')
+
+        expect(btn.attr('onClick')).toBeInstanceOf(Function)
+        expect(btn.attr('onMouseDown')).toBeInstanceOf(Function)
+      })
+
+      context('when event attached button is clicked', () => {
+        it('toggles dropdown and focuses to button', () => {
+          const baseDropdown = component()
+          const btn: any = () => baseDropdown.find(<button id="btn-test" />)
+          const focus = jest.fn()
+
+          btn().simulate('click', { target: { focus } })
+          expect(baseDropdown.state('open')).toBe(true)
+          expect(focus).toBeCalledTimes(1)
+
+          btn().simulate('click', { target: { focus } })
+          expect(baseDropdown.state('open')).toBe(false)
+          expect(focus).toBeCalledTimes(2)
+        })
+      })
+
+      context('when mouse button downs on event attached button', () => {
+        it('disables onFocusOut event a moment (to normalize click behavior for cross-browser)', () => {
+          const baseDropdown = component({ id: 'container' })
+          baseDropdown.setState({ open: true })
+
+          const container: any = () => baseDropdown.find(<div id="container" />)
+
+          baseDropdown
+            .find(<button id="btn-test" />)
+            .simulate('mouseDown', { target: 'test' })
+
+          container().simulate('focusOut', { relatedTarget: null })
+          expect(baseDropdown.state('open')).toBe(true)
+
+          // Works onFocusOut event immidiately (0ms)
+          jest.advanceTimersByTime(0)
+          container().simulate('focusOut', { relatedTarget: null })
+          expect(baseDropdown.state('open')).toBe(false)
+        })
       })
     })
 
@@ -96,7 +155,7 @@ describe('Dropdown components', () => {
 
   describe('DropdownItem', () => {
     const item = (
-      props = {}
+      props: DropdownItemProps = {}
     ): {
       dropdownParent: FindWrapper<any, any>
       dropdownItem: FindWrapper<any, any>
@@ -126,15 +185,21 @@ describe('Dropdown components', () => {
         expect(dropdownParent.state('open')).toBe(false)
       })
 
+      context('when autoClose prop is false', () => {
+        it('does not close dropdown menu', () => {
+          const { dropdownParent, dropdownItem } = item({ autoClose: false })
+          dropdownItem.find('button').simulate('click')
+
+          expect(dropdownParent.state('open')).toBe(true)
+        })
+      })
+
       context('when onClick event is attached', () => {
         it('triggers attached event with delayed by timer', () => {
           const onClick = jest.fn()
           const { dropdownItem } = item({ onClick })
+
           dropdownItem.find('button').simulate('click')
-
-          expect(setTimeout).toBeCalledTimes(1)
-          jest.runOnlyPendingTimers()
-
           expect(onClick).toBeCalled()
         })
       })
