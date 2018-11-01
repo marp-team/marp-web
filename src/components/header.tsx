@@ -16,6 +16,8 @@ export default () => {
     <HeaderButton class={style.appButton} {...props} />
   )
 
+  const print = () => setTimeout(() => window.print(), 16)
+
   return (
     <header class={style.header}>
       <Dropdown button={appButton}>
@@ -25,7 +27,7 @@ export default () => {
           <DropdownItem>Open...</DropdownItem>
           <DropdownItem>Save</DropdownItem>
           <DropdownDivider />
-          <DropdownItem onClick={window.print}>
+          <DropdownItem onClick={print}>
             Print
             {isChrome() && ' / Export to PDF'}
             ...

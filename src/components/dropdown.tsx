@@ -100,31 +100,39 @@ export const DropdownMenu = (props: { children: any; [key: string]: any }) => (
   <ul role="menu" tabIndex={-1} {...combineClass(props, style.menu)} />
 )
 
-export function DropdownItem(
-  this,
-  props: { autoClose?: boolean; children: any; onClick?: (...args: any) => any }
-) {
-  const { autoClose, onClick } = props
+export interface DropdownItemProps {
+  autoClose?: boolean
+  onClick?: JSX.EventHandler<MouseEvent>
+  [key: string]: any
+}
 
-  const renderButton = (dropdown: Dropdown | undefined) => {
-    const handleClick = (...args) => {
-      if (dropdown && (autoClose || autoClose === undefined)) dropdown.close()
-      if (typeof onClick === 'function') setTimeout(() => onClick(...args), 16)
+export class DropdownItem extends Component<DropdownItemProps, {}> {
+  static defaultProps = {
+    autoClose: true,
+  }
+
+  private renderButton = (dropdown: Dropdown) => {
+    const { autoClose, onClick } = this.props
+    const handleClick = e => {
+      if (autoClose) dropdown.close()
+      if (onClick) onClick(e)
     }
 
     return (
       <button
-        {...combineClass(props, style.itemButton)}
+        {...combineClass(this.props, style.itemButton)}
         onClick={handleClick}
       />
     )
   }
 
-  return (
-    <li role="menuitem" class={style.item}>
-      <Consumer>{renderButton}</Consumer>
-    </li>
-  )
+  render() {
+    return (
+      <li role="menuitem" class={style.item}>
+        <Consumer>{this.renderButton}</Consumer>
+      </li>
+    )
+  }
 }
 
 export const DropdownDivider = () => (
