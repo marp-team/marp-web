@@ -2,10 +2,10 @@
   "extends": ["tslint-config-airbnb", "tslint-react", "tslint-config-prettier"],
   "rules": {
     "curly": false,
+    "function-name": false,
+    "import-name": false,
     "no-boolean-literal-compare": false,
     "no-implicit-dependencies": [true, "dev"],
-    "import-name": false,
-    "function-name": false,
     "variable-name": false
   }
 }
