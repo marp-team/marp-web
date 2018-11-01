@@ -91,6 +91,7 @@
     "incremental-dom": "^0.5.1",
     "markdown-it-incremental-dom": "^2.0.1",
     "preact": "^8.3.1",
+    "preact-context": "^1.1.2",
     "uuid": "^3.3.2"
   },
   "resolutions": {
