@@ -10,6 +10,9 @@ import style from '../../src/components/style/dropdown.module.scss'
 
 jest.useFakeTimers()
 
+beforeEach(() => jest.spyOn(console, 'warn').mockImplementation())
+afterEach(() => jest.restoreAllMocks())
+
 describe('Dropdown components', () => {
   const dropdown = (props = {}, itemProps = {}) => {
     const renderDummyButton = () => <span />
