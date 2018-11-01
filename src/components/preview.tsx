@@ -31,7 +31,7 @@ export default class Preview extends Component<PreviewProps, PreviewStates> {
     return (
       <div class={style.preview}>
         <MarpEditor value={this.state.value} onInput={this.handleInput} />
-        <MarpPreview markdown={this.state.value} />
+        <MarpPreview class={style.previewPane} markdown={this.state.value} />
       </div>
     )
   }

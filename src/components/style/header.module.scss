@@ -6,6 +6,10 @@
   height: 50px;
   position: relative;
   z-index: 1;
+
+  @media print {
+    display: none;
+  }
 }
 
 .app-button {
