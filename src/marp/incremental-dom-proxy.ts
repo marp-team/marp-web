@@ -10,14 +10,6 @@ const funcs = [
 
 export type IncrementalDOMProxyBuffer = [number, any[]][]
 
-export function patch(
-  incrementalDOM: any,
-  node: Element,
-  buffer: IncrementalDOMProxyBuffer
-) {
-  incrementalDOM.patch(node, convert(incrementalDOM, buffer))
-}
-
 export function convert(
   incrementalDOM: any,
   buffer: IncrementalDOMProxyBuffer

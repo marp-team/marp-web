@@ -4,9 +4,6 @@ import IncrementalDOMProxy, {
   IncrementalDOMProxyBuffer,
 } from './incremental-dom-proxy'
 
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
-type Overwrite<T, U> = Omit<T, Extract<keyof T, keyof U>> & U
-
 type ExtendedMarpRenderResult = Overwrite<
   ReturnType<Marp['render']>,
   {
