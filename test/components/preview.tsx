@@ -11,8 +11,7 @@ jest.mock('../../src/marp/worker-wrapper')
 afterEach(() => jest.restoreAllMocks())
 
 describe('<Preview />', () => {
-  const previewJSX = (props: PreviewProps = {}) => <Preview {...props} />
-  const preview = (props: PreviewProps = {}) => deep(previewJSX(props))
+  const preview = (props: PreviewProps = {}) => deep(<Preview {...props} />)
 
   it('renders <MarpEditor>', () =>
     expect(preview().find(<MarpEditor />)).toHaveLength(1))
@@ -45,8 +44,8 @@ describe('<Preview />', () => {
 
     it('renders updated value through MarpManager', () => {
       const renderSpy = jest.spyOn(MarpManager.prototype, 'render')
-
       const previewCmp = component()
+
       textarea(previewCmp).simulate('input', { target: { value: 'updated' } })
       previewCmp.rerender()
 

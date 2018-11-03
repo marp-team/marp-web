@@ -6,7 +6,6 @@ import {
   DropdownItemProps,
   DropdownMenu,
 } from '../../src/components/dropdown'
-import style from '../../src/components/style/dropdown.module.scss'
 
 jest.useFakeTimers()
 
@@ -28,7 +27,7 @@ describe('Dropdown components', () => {
 
   describe('<Dropdown />', () => {
     it('renders <div> with dropdown class', () => {
-      expect(dropdown().find(<div class={style.dropdown} />)).toHaveLength(1)
+      expect(dropdown().find(<div class="dropdown" />)).toHaveLength(1)
     })
 
     context('with rest props', () => {
@@ -40,7 +39,7 @@ describe('Dropdown components', () => {
 
         expect(div).toHaveLength(1)
         expect(div.attr('class')).toContain('test')
-        expect(div.attr('class')).toContain(style.dropdown)
+        expect(div.attr('class')).toContain('dropdown')
       })
     })
 

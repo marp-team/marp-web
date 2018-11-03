@@ -10,7 +10,10 @@ const { Component, h } = preact
 
 type onRenderedCallback = NonNullable<MarpManager['onRendered']>
 
-class Core extends Component<{ markdown: string; [key: string]: any }, {}> {
+export class MarpCore extends Component<
+  { markdown: string; [key: string]: any },
+  {}
+> {
   private container?: HTMLElement
 
   private readonly id: string
@@ -75,5 +78,5 @@ class Core extends Component<{ markdown: string; [key: string]: any }, {}> {
 }
 
 export const MarpPreview = props => (
-  <Core {...combineClass(props, style.preview)} />
+  <MarpCore {...combineClass(props, style.preview)} />
 )
