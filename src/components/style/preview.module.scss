@@ -1,0 +1,21 @@
+.preview {
+  @media screen {
+    bottom: 0;
+    display: flex;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    z-index: 0;
+  }
+
+  @media print {
+    > * {
+      display: none;
+    }
+
+    > .preview-pane {
+      display: block;
+    }
+  }
+}

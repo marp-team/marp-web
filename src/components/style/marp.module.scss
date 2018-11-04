@@ -1,0 +1,46 @@
+.core {
+  position: relative;
+
+  &-container {
+    display: block;
+  }
+
+  &-slide-container {
+    > svg {
+      display: block;
+      transform: translateZ(0); // rendering hack
+    }
+  }
+}
+
+@media screen {
+  .preview {
+    background: #f8f8f8;
+    flex: 1;
+    position: relative;
+
+    .core-container {
+      bottom: 0;
+      left: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: absolute;
+      right: 0;
+      top: 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .core-slide-container {
+      margin: 50px;
+      display: block;
+      box-shadow: 0 5px 10px rgba(#000, 0.25);
+    }
+
+    &:empty {
+      background-image: url('./assets/marp-loading.svg');
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: 82px 40px;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import * as preact from 'preact'
-import style from './button.module.scss'
+import style from './style/button.module.scss'
 import { combineClass } from './utils'
 
 const { h } = preact

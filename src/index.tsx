@@ -1,17 +1,10 @@
 import * as preact from 'preact'
-import Header from './components/header'
-import Preview from './preview'
+import App from './components/app'
 
 const { h, render } = preact
 
 export default function index() {
-  new Preview({
-    editor: document.getElementById('editor') as HTMLTextAreaElement,
-    container: document.getElementById('preview') as HTMLDivElement,
-    style: document.getElementById('preview-css') as HTMLStyleElement,
-  })
-
-  render(<Header />, document.getElementById('header')!)
+  render(<App />, document.getElementById('marp')!)
 }
 
 export function registerServiceWorker() {

@@ -7,28 +7,27 @@ import {
   DropdownDivider,
 } from './dropdown'
 import { isChrome } from './utils'
-import style from './header.module.scss'
+import style from './style/header.module.scss'
 
 const { h } = preact
 
 export default () => {
-  let mainMenu: Dropdown
+  const appButton = ({ props }) => (
+    <HeaderButton class={style.appButton} {...props} />
+  )
+
+  const print = () => setTimeout(() => window.print(), 16)
 
   return (
     <header class={style.header}>
-      <Dropdown ref={elm => (mainMenu = elm)}>
-        <HeaderButton
-          class={style.appButton}
-          onClick={e => mainMenu.handleButtonClick(e)}
-          onMouseDown={e => mainMenu.handleButtonMouseDown(e)}
-        />
+      <Dropdown button={appButton}>
         <DropdownMenu>
           <DropdownItem>New</DropdownItem>
           <DropdownDivider />
           <DropdownItem>Open...</DropdownItem>
           <DropdownItem>Save</DropdownItem>
           <DropdownDivider />
-          <DropdownItem onClick={() => window.print()}>
+          <DropdownItem onClick={print}>
             Print
             {isChrome() && ' / Export to PDF'}
             ...

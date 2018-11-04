@@ -4,9 +4,6 @@ import IncrementalDOMProxy, {
   IncrementalDOMProxyBuffer,
 } from './incremental-dom-proxy'
 
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
-type Overwrite<T, U> = Omit<T, Extract<keyof T, keyof U>> & U
-
 type ExtendedMarpRenderResult = Overwrite<
   ReturnType<Marp['render']>,
   {
@@ -22,10 +19,7 @@ export type ExtendedMarp = Overwrite<
 >
 
 export default function createMarp(opts: MarpOptions = {}): ExtendedMarp {
-  const marp: ExtendedMarp = <any>new Marp({
-    ...opts,
-    container: { tag: 'div', class: 'marp__core' },
-  })
+  const marp: ExtendedMarp = <any>new Marp({ ...opts })
   const proxy = new IncrementalDOMProxy()
 
   // Incremental DOM

@@ -1,20 +1,39 @@
 import * as preact from 'preact'
-import style from './dropdown.module.scss'
+import { createContext, Context } from 'preact-context'
+import style from './style/dropdown.module.scss'
 import { combineClass } from './utils'
 
 const { Component, h } = preact
 
-export class Dropdown extends Component<any, { open: boolean }> {
+const dropdownContext: Context<any> = createContext(undefined)
+const { Consumer, Provider } = dropdownContext
+
+export interface DropdownButtonContext {
+  dropdown: Dropdown
+  props: {
+    onClick: JSX.EventHandler<MouseEvent>
+    onMouseDown: JSX.EventHandler<MouseEvent>
+  }
+}
+
+export interface DropdownProps {
+  button: (context: DropdownButtonContext) => JSX.Element
+  children: JSX.Element
+  open?: boolean
+  [key: string]: any
+}
+
+export interface DropdownStates {
+  open: boolean
+}
+
+export class Dropdown extends Component<DropdownProps, DropdownStates> {
   private container?: HTMLDivElement
   private mouseDownButton?: Element
 
   constructor(props) {
     super(props)
-    this.state = { open: false }
-  }
-
-  getChildContext() {
-    return { dropdown: this, dropdownOpen: this.state.open }
+    this.state = { open: !!props.open }
   }
 
   close() {
@@ -25,11 +44,13 @@ export class Dropdown extends Component<any, { open: boolean }> {
     this.setState({ open: true })
   }
 
-  toggle(from = this.state.open) {
-    this.setState({ open: !from })
+  toggle() {
+    this.setState({ open: !this.state.open })
   }
 
-  handleButtonClick(e) {
+  private assignContainer = element => (this.container = element)
+
+  private handleButtonClick = e => {
     this.toggle()
 
     // Keep focus to button after clicking in macOS Firefox and Safari
@@ -37,55 +58,81 @@ export class Dropdown extends Component<any, { open: boolean }> {
     e.target.focus()
   }
 
-  handleButtonMouseDown(e) {
+  private handleButtonMouseDown = e => {
     this.mouseDownButton = e.target
     setTimeout(() => (this.mouseDownButton = undefined), 0)
   }
 
-  private handleFocusOut(e) {
+  private handleFocusOut = e => {
     if (!this.mouseDownButton)
       this.setState({
         open: this.container ? this.container.contains(e.relatedTarget) : false,
       })
   }
 
-  render(props) {
+  render() {
     return (
       <div
-        {...combineClass(props, style.dropdown)}
-        ref={div => (this.container = div)}
-        onFocusOut={e => this.handleFocusOut(e)}
-      />
+        {...combineClass(this.props, style.dropdown)}
+        ref={this.assignContainer}
+        onFocusOut={this.handleFocusOut}
+      >
+        {this.props.button({
+          dropdown: this,
+          props: {
+            onClick: this.handleButtonClick,
+            onMouseDown: this.handleButtonMouseDown,
+          },
+        })}
+        {this.state.open && (
+          <Consumer>
+            {parent => (
+              <Provider value={parent || this}>{this.props.children}</Provider>
+            )}
+          </Consumer>
+        )}
+      </div>
     )
   }
 }
 
-export function DropdownMenu(this, props: { children: any }) {
-  return (
-    this.context.dropdownOpen && (
-      <ul role="menu" tabIndex={-1} {...combineClass(props, style.menu)} />
-    )
-  )
+export const DropdownMenu = (props: { children: any; [key: string]: any }) => (
+  <ul role="menu" tabIndex={-1} {...combineClass(props, style.menu)} />
+)
+
+export interface DropdownItemProps {
+  autoClose?: boolean
+  onClick?: JSX.EventHandler<MouseEvent>
+  [key: string]: any
 }
 
-export function DropdownItem(
-  this,
-  props: { children: any; onClick?: () => any }
-) {
-  const { onClick } = props
-  const handleClick = () => {
-    this.context.dropdown.close()
-    if (typeof onClick === 'function') setTimeout(() => onClick(), 16)
+export class DropdownItem extends Component<DropdownItemProps, {}> {
+  static defaultProps = {
+    autoClose: true,
   }
 
-  return (
-    <li role="menuitem" class={style.item}>
+  private renderButton = (dropdown: Dropdown) => {
+    const { autoClose, onClick } = this.props
+    const handleClick = e => {
+      if (autoClose) dropdown.close()
+      if (onClick) onClick(e)
+    }
+
+    return (
       <button
-        {...combineClass(props, style.itemButton)}
+        {...combineClass(this.props, style.itemButton)}
         onClick={handleClick}
       />
-    </li>
-  )
+    )
+  }
+
+  render() {
+    return (
+      <li role="menuitem" class={style.item}>
+        <Consumer>{this.renderButton}</Consumer>
+      </li>
+    )
+  }
 }
 
 export const DropdownDivider = () => (

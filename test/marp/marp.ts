@@ -1,7 +1,7 @@
 import Marp from '@marp-team/marp-core'
-import IncrementalDOM from 'incremental-dom'
+import IncrementalDOM, { patch } from 'incremental-dom'
 import createMarp from '../../src/marp/marp'
-import { patch } from '../../src/marp/incremental-dom-proxy'
+import { convert } from '../../src/marp/incremental-dom-proxy'
 
 describe('Marp instance', () => {
   let container: HTMLElement
@@ -25,8 +25,8 @@ describe('Marp instance', () => {
       expect(Array.isArray(html)).toBe(true)
 
       // Patchable with Incremental DOM proxy
-      patch(IncrementalDOM, container, html)
-      const heading = container.querySelector('.marp__core h1')
+      patch(container, convert(IncrementalDOM, html))
+      const heading = container.querySelector('h1')
 
       expect(heading).toBeTruthy()
       expect(heading!.textContent).toBe('markdown')
@@ -36,7 +36,10 @@ describe('Marp instance', () => {
   describe('Image syntax', () => {
     it('has referrerpolicy attribute with specified no-referrer', () => {
       const marp = createMarp()
-      patch(IncrementalDOM, container, marp.render('![image](img.png)').html)
+      patch(
+        container,
+        convert(IncrementalDOM, marp.render('![image](img.png)').html)
+      )
 
       expect(
         container.querySelector(
@@ -51,9 +54,11 @@ describe('Marp instance', () => {
       const marp = createMarp()
 
       patch(
-        IncrementalDOM,
         container,
-        marp.render('[link](https://example.com/)').html
+        convert(
+          IncrementalDOM,
+          marp.render('[link](https://example.com/)').html
+        )
       )
 
       expect(

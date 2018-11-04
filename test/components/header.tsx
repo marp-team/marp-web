@@ -4,6 +4,9 @@ import { HeaderButton } from '../../src/components/button'
 import Header from '../../src/components/header'
 import * as utils from '../../src/components/utils'
 
+jest.useFakeTimers()
+
+beforeEach(() => jest.spyOn(console, 'warn').mockImplementation())
 afterEach(() => jest.restoreAllMocks())
 
 describe('<Header />', () => {
@@ -72,9 +75,11 @@ describe('<Header />', () => {
           )
           expect(print).toHaveLength(1)
 
-          // Trigger window.print() on click
+          // Trigger window.print() on click with delayed
           const printSpy = jest.spyOn(window, 'print').mockImplementation()
           print.simulate('click')
+
+          jest.runOnlyPendingTimers()
           expect(printSpy).toBeCalled()
         })
 
