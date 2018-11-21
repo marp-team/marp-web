@@ -10,7 +10,8 @@ jest.mock('../../src/marp/marp.worker')
 jest.mock('../../src/marp/worker-wrapper')
 
 beforeEach(() =>
-  (AnimationFrame.push as jest.Mock).mockImplementation(fn => fn()))
+  (AnimationFrame.push as jest.Mock).mockImplementation(fn => fn())
+)
 
 afterEach(() => jest.restoreAllMocks())
 

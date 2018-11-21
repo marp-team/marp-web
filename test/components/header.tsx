@@ -85,7 +85,8 @@ describe('<Header />', () => {
 
         context('when it has rendered in Chrome', () => {
           beforeEach(() =>
-            jest.spyOn(utils, 'isChrome').mockImplementation(() => true))
+            jest.spyOn(utils, 'isChrome').mockImplementation(() => true)
+          )
 
           it('has a <DropdownItem> for print and export to PDF', () => {
             const print = findMenuItem(
