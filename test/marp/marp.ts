@@ -1,7 +1,9 @@
 import Marp from '@marp-team/marp-core'
-import IncrementalDOM, { patch } from 'incremental-dom'
+import * as IncrementalDOM from 'incremental-dom'
 import createMarp from '../../src/marp/marp'
 import { convert } from '../../src/marp/incremental-dom-proxy'
+
+const { patch } = IncrementalDOM
 
 describe('Marp instance', () => {
   let container: HTMLElement
