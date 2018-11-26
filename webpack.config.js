@@ -77,6 +77,10 @@ module.exports = env => {
     ].filter(p => p),
     resolve: {
       alias: {
+        'incremental-dom$': path.resolve(
+          __dirname,
+          'node_modules/incremental-dom/dist/incremental-dom-min.js'
+        ),
         // Stop bundling a huge and unnecessary esprima module
         // https://github.com/nodeca/js-yaml/pull/435
         'js-yaml$': path.resolve(
