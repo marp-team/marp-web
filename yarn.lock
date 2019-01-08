@@ -9500,6 +9500,11 @@ unique-string@^1.0.0:
   dependencies:
     crypto-random-string "^1.0.0"
 
+unissist@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/unissist/-/unissist-1.3.0.tgz#0a39a94c061d4fbfca4e3974b0b1210223c2d02a"
+  integrity sha512-IFC+63jummISCfgy/3hFH6N2wV7CmwHKafTt2/uO3a9k2ueTT6nB0i0mpE1CeIfTUdUPSk96sXSP4tCnnPJv/Q==
+
 unist-util-find-all-after@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/unist-util-find-all-after/-/unist-util-find-all-after-1.0.2.tgz#9be49cfbae5ca1566b27536670a92836bf2f8d6d"
