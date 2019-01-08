@@ -13,7 +13,7 @@ describe('<Preview />', () => {
   const preview = (props: any = {}) => deep(<Preview buffer="" {...props} />)
 
   it('renders <MarpEditor>', () =>
-    expect(preview().find(<MarpEditor />)).toHaveLength(1))
+    expect(preview().find(<MarpEditor value="" />)).toHaveLength(1))
 
   it('renders <MarpPreview>', () =>
     expect(preview().find(<MarpPreview />)).toHaveLength(1))
@@ -27,7 +27,7 @@ describe('<Preview />', () => {
 
   context('when text has inputed to textarea', () => {
     const textarea = (cmp: FindWrapper<any, any>): FindWrapper<any, any> =>
-      cmp.find(<MarpEditor />).find('textarea')
+      cmp.find(<MarpEditor value="" />).find('textarea')
 
     it('calls handleInput action', () => {
       const handleInput = jest.fn()
