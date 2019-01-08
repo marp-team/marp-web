@@ -6,16 +6,19 @@ import { MarpPreview } from './marp'
 
 const { h } = preact
 
-const Preview = connect<any, {}, any, any>(
-  'buffer',
-  () => ({
-    handleInput: (_, e) => ({ buffer: e.target.value }),
-  })
-)(({ buffer, handleInput }) => (
+export const Preview: preact.FunctionalComponent<{
+  buffer: string
+  handleInput: Function
+}> = ({ buffer, handleInput }) => (
   <div class={style.preview}>
     <MarpEditor value={buffer} onInput={handleInput} />
     <MarpPreview class={style.previewPane} markdown={buffer} />
   </div>
-))
+)
 
-export default Preview
+export default connect<any, {}, any, any>(
+  'buffer',
+  () => ({
+    handleInput: (_, e) => ({ buffer: e.target.value }),
+  })
+)(Preview)
