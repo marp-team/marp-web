@@ -8,7 +8,7 @@ const { h } = preact
 
 export const Preview: preact.FunctionalComponent<{
   buffer: string
-  handleInput: Function
+  handleInput: JSX.EventHandler<Event>
 }> = ({ buffer, handleInput }) => (
   <div class={style.preview}>
     <MarpEditor value={buffer} onInput={handleInput} />
@@ -19,6 +19,6 @@ export const Preview: preact.FunctionalComponent<{
 export default connect<any, {}, any, any>(
   'buffer',
   () => ({
-    handleInput: (_, e) => ({ buffer: e.target.value }),
+    handleInput: (_, e) => ({ buffer: e.target.value, bufferChanged: true }),
   })
 )(Preview)

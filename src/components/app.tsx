@@ -1,4 +1,6 @@
 import * as preact from 'preact'
+import persistStore from 'unissist'
+import localStorageAdapter from 'unissist/integrations/localStorageAdapter'
 import createStore, { Store } from 'unistore'
 import devtools from 'unistore/devtools'
 import { Provider } from 'unistore/preact'
@@ -10,16 +12,19 @@ const { h } = preact
 
 export interface GlobalStore {
   buffer: string
+  bufferChanged: boolean
 }
 
 // Global store
 const store: Store<GlobalStore> = (() => {
-  const initialStore: Store<GlobalStore> = createStore({
-    buffer: '',
+  let store = createStore({ buffer: '', bufferChanged: false })
+
+  persistStore(store, localStorageAdapter(), {
+    map: ({ buffer, bufferChanged }) => ({ buffer, bufferChanged }),
   })
 
-  if (process.env.NODE_ENV === 'development') return devtools(initialStore)
-  return initialStore
+  if (process.env.NODE_ENV === 'development') store = devtools(store)
+  return store
 })()
 
 export default () => {
