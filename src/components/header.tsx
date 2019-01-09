@@ -16,13 +16,14 @@ const appButton = ({ props }) => (
   <HeaderButton class={style.appButton} {...props} />
 )
 
-const print = () => setTimeout(() => window.print(), 16)
+const lazy = (func: () => void): (() => void) => () => setTimeout(func, 16)
+const print = lazy(() => window.print())
 
-export const Header = ({ clearBuffer }) => (
+export const Header = ({ newCommand }) => (
   <header class={style.header}>
     <Dropdown button={appButton}>
       <DropdownMenu>
-        <DropdownItem onClick={clearBuffer}>New</DropdownItem>
+        <DropdownItem onClick={lazy(newCommand)}>New</DropdownItem>
         <DropdownDivider />
         <DropdownItem>Open...</DropdownItem>
         <DropdownItem>Save</DropdownItem>

@@ -2,19 +2,25 @@ import { connect } from 'unistore/preact'
 import { GlobalStore } from '../app'
 
 interface Actions {
-  clearBuffer: () => void
+  newCommand: () => void
   updateBuffer: (buffer: string) => void
 }
 
 export default connect<
-  Pick<GlobalStore, 'buffer' | 'bufferChanged'>,
+  Partial<Pick<GlobalStore, 'buffer' | 'bufferChanged'>>,
   any,
-  GlobalStore,
+  Partial<GlobalStore>,
   Actions
 >(
   'buffer,bufferChanged',
   () => ({
-    clearBuffer: () => ({ buffer: '', bufferChanged: false }),
+    newCommand: ({ bufferChanged }) => {
+      if (bufferChanged) {
+        if (!window.confirm('Are you sure? Your changed buffer will be lost.'))
+          return {}
+      }
+      return { buffer: '', bufferChanged: false }
+    },
     updateBuffer: (_, buffer: string) => ({ buffer, bufferChanged: true }),
   })
 )
