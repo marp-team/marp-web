@@ -23,9 +23,7 @@ export const store = (initialStore: Partial<GlobalStore> = {}) => {
     ...initialStore,
   })
 
-  persistStore(store, localStorageAdapter(), {
-    map: ({ buffer, bufferChanged }) => ({ buffer, bufferChanged }),
-  })
+  persistStore(store, localStorageAdapter())
 
   if (process.env.NODE_ENV === 'development') store = devtools(store)
   return store

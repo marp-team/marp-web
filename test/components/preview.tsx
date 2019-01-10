@@ -10,8 +10,7 @@ jest.mock('../../src/marp/worker-wrapper')
 afterEach(() => jest.restoreAllMocks())
 
 describe('<Preview />', () => {
-  const preview = (props: any = {}) =>
-    deep(<Preview buffer="" updateBuffer={jest.fn()} {...props} />)
+  const preview = (props: any = {}) => deep(<Preview buffer="" {...props} />)
 
   it('renders <MarpEditor>', () =>
     expect(preview().find(<MarpEditor value="" />)).toHaveLength(1))

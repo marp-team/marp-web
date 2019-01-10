@@ -1,5 +1,5 @@
 import * as preact from 'preact'
-import bufferActions from './actions/buffer'
+import connectBufferActions, { ConnectableChild } from './actions/buffer'
 import { HeaderButton } from './button'
 import {
   Dropdown,
@@ -15,7 +15,11 @@ const { h } = preact
 const app = ({ props }) => <HeaderButton class={style.appButton} {...props} />
 const lazy = (func: () => void): (() => void) => () => setTimeout(func, 16)
 
-export const Header = ({ newCommand, openCommand, saveCommand }) => (
+export const Header: ConnectableChild = ({
+  newCommand,
+  openCommand,
+  saveCommand,
+}) => (
   <header class={style.header}>
     <Dropdown button={app}>
       <DropdownMenu>
@@ -34,4 +38,4 @@ export const Header = ({ newCommand, openCommand, saveCommand }) => (
   </header>
 )
 
-export default bufferActions(Header)
+export default connectBufferActions()(Header)

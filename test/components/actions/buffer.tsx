@@ -12,7 +12,7 @@ afterEach(() => jest.restoreAllMocks())
 describe('Actions for buffer', () => {
   const actions = (baseStore = store()) => {
     const child = jest.fn()
-    const ConnectedChild = bufferActions(child)
+    const ConnectedChild = bufferActions()(child)
 
     render(
       <Provider store={baseStore}>

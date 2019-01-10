@@ -1,4 +1,5 @@
-import { connect } from 'unistore/preact'
+import { AnyComponent, ComponentConstructor } from 'preact'
+import { connect as unistoreConnect } from 'unistore/preact'
 import { GlobalStore } from '../app'
 import { ConnectedActions } from './utils'
 
@@ -61,12 +62,16 @@ const actions: ConnectedActions<GlobalStore, BufferActions> = store => ({
   updateBuffer: (_, buffer) => ({ buffer, bufferChanged: true }),
 })
 
-export default connect<
-  Partial<Pick<GlobalStore, 'buffer'>>,
-  any,
-  GlobalStore,
-  BufferActions
->(
-  'buffer',
-  actions
-)
+export type ConnectableChild<
+  P extends keyof GlobalStore = never,
+  S = any
+> = AnyComponent<
+  JSX.ElementChildrenAttribute & Pick<GlobalStore, P> & BufferActions,
+  S
+>
+
+export default function connect<P extends keyof GlobalStore = never, S = any>(
+  ...props: P[]
+): (Child: ConnectableChild<P, S>) => ComponentConstructor<any, S> {
+  return unistoreConnect(props, actions)
+}
