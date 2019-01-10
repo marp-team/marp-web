@@ -1,7 +1,7 @@
 import { h } from 'preact'
 import { deep, FindWrapper } from 'preact-render-spy'
 import { HeaderButton } from '../../src/components/button'
-import Header from '../../src/components/header'
+import { Header } from '../../src/components/header'
 import * as utils from '../../src/components/utils'
 
 jest.useFakeTimers()
@@ -10,7 +10,8 @@ beforeEach(() => jest.spyOn(console, 'warn').mockImplementation())
 afterEach(() => jest.restoreAllMocks())
 
 describe('<Header />', () => {
-  const header = (props = {}) => deep(<Header {...props} />)
+  const header = (props = {}) =>
+    deep(<Header newCommand={jest.fn()} {...props} />)
 
   it('renders <header> element', () =>
     expect(header().find('header')).toHaveLength(1))
@@ -51,8 +52,8 @@ describe('<Header />', () => {
     })
 
     describe('Menu items', () => {
-      const component = (): FindWrapper<any, any> => {
-        const ret = header()
+      const component = (props = {}): FindWrapper<any, any> => {
+        const ret = header(props)
         click(appBtn(ret))
 
         return ret
@@ -67,15 +68,30 @@ describe('<Header />', () => {
           .map(e => e)
           .find(condition)
 
+      describe('New', () => {
+        it('triggers passed newCommand action with delay', () => {
+          const newCommand = jest.fn()
+          const newMenu = findMenuItem(
+            component({ newCommand }),
+            elm => elm.text() === 'New'
+          )
+          expect(newMenu).toHaveLength(1)
+
+          newMenu.simulate('click')
+
+          jest.runOnlyPendingTimers()
+          expect(newCommand).toBeCalled()
+        })
+      })
+
       describe('Print', () => {
-        it('has a <DropdownItem> for print', () => {
+        it('triggers window.print() with delay', () => {
           const print = findMenuItem(
             component(),
             elm => elm.text() === 'Print...'
           )
           expect(print).toHaveLength(1)
 
-          // Trigger window.print() on click with delayed
           const printSpy = jest.spyOn(window, 'print').mockImplementation()
           print.simulate('click')
 
