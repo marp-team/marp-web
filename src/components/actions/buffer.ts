@@ -18,7 +18,7 @@ const confirmBuffer = (bufferChanged?: boolean) =>
 const actions: ConnectedActions<GlobalStore, BufferActions> = store => ({
   newCommand: ({ bufferChanged }) => {
     if (!confirmBuffer(bufferChanged)) return
-    return { buffer: '', bufferChanged: false }
+    return { buffer: '', bufferChanged: false, fileName: '' }
   },
   openCommand: ({ bufferChanged }) => {
     if (!confirmBuffer(bufferChanged)) return
@@ -37,20 +37,21 @@ const actions: ConnectedActions<GlobalStore, BufferActions> = store => ({
         store.setState({
           buffer: <string>reader.result,
           bufferChanged: false,
+          fileName: file.name,
         })
 
       reader.readAsText(file)
     })
     input.click()
   },
-  saveCommand: ({ buffer }) => {
+  saveCommand: ({ buffer, fileName }) => {
     const bufferURL = URL.createObjectURL(
       new Blob([buffer], { type: 'text/markdown' })
     )
     const link = document.createElement('a')
 
     link.href = bufferURL
-    link.download = 'untitled.md'
+    link.download = fileName || 'untitled.md'
     link.style.display = 'none'
 
     document.body.appendChild(link)
@@ -58,6 +59,7 @@ const actions: ConnectedActions<GlobalStore, BufferActions> = store => ({
     document.body.removeChild(link)
 
     setTimeout(() => URL.revokeObjectURL(bufferURL), 3000)
+    return { bufferChanged: false, fileName: link.download }
   },
   updateBuffer: (_, buffer) => ({ buffer, bufferChanged: true }),
 })

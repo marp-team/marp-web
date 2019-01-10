@@ -13,6 +13,7 @@ const { h } = preact
 export interface GlobalStore {
   buffer: string
   bufferChanged: boolean
+  fileName: string
 }
 
 // Global store
@@ -20,6 +21,7 @@ export const store = (initialStore: Partial<GlobalStore> = {}) => {
   let store: Store<GlobalStore> = createStore({
     buffer: '',
     bufferChanged: false,
+    fileName: '',
     ...initialStore,
   })
 
