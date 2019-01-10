@@ -6,7 +6,7 @@ import { MarpPreview } from './marp'
 
 const { h } = preact
 
-export const Preview = ({ buffer, updateBuffer }) => {
+export const Preview = ({ buffer, updateBuffer }: any) => {
   const handleInput = e => updateBuffer(e.target.value)
 
   return (
