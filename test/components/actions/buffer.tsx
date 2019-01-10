@@ -5,6 +5,8 @@ import bufferActions, {
 } from '../../../src/components/actions/buffer'
 import { store } from '../../../src/components/app'
 
+jest.mock('unissist')
+
 afterEach(() => jest.restoreAllMocks())
 
 describe('Actions for buffer', () => {
@@ -55,6 +57,58 @@ describe('Actions for buffer', () => {
         actions(base).newCommand()
         expect(confirm).toBeCalledTimes(1)
         expect(base.getState().buffer).toBe('contents')
+      })
+    })
+  })
+
+  describe('#openCommand', () => {
+    let open: jest.SpyInstance<HTMLInputElement['click']>
+    beforeEach(() => (open = jest.spyOn(HTMLInputElement.prototype, 'click')))
+
+    it('updates buffer store to passed value', done => {
+      const spy = jest.spyOn(document, 'createElement')
+      const base = store({ bufferChanged: false })
+
+      actions(base).openCommand()
+      expect(spy).toBeCalledWith('input')
+      expect(open).toBeCalledTimes(1)
+
+      const input: HTMLInputElement = spy.mock.results[0].value
+
+      jest
+        .spyOn(input, 'files', 'get')
+        .mockImplementation(() => [new File(['TEXT CONTENT'], 'test.md')])
+
+      const setState = jest.spyOn(base, 'setState').mockImplementation(() => {
+        expect(setState).toBeCalledWith({
+          buffer: 'TEXT CONTENT',
+          bufferChanged: false,
+        })
+        done()
+      })
+
+      input.dispatchEvent(new Event('change'))
+    })
+
+    context('when bufferChanged store is true', () => {
+      it('opens confirm dialog and file dialog by agree', () => {
+        const confirm = jest
+          .spyOn(window, 'confirm')
+          .mockImplementation(() => true)
+
+        actions(store({ bufferChanged: true })).openCommand()
+        expect(confirm).toBeCalledTimes(1)
+        expect(open).toBeCalledTimes(1)
+      })
+
+      it('does not open file dialog when confirm was canceled', () => {
+        const confirm = jest
+          .spyOn(window, 'confirm')
+          .mockImplementation(() => false)
+
+        actions(store({ bufferChanged: true })).openCommand()
+        expect(confirm).toBeCalledTimes(1)
+        expect(open).not.toBeCalled()
       })
     })
   })

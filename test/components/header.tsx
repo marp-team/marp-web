@@ -84,6 +84,22 @@ describe('<Header />', () => {
         })
       })
 
+      describe('Open', () => {
+        it('triggers passed openCommand action with delay', () => {
+          const openCommand = jest.fn()
+          const openMenu = findMenuItem(
+            component({ openCommand }),
+            elm => elm.text() === 'Open...'
+          )
+          expect(openMenu).toHaveLength(1)
+
+          openMenu.simulate('click')
+
+          jest.runOnlyPendingTimers()
+          expect(openCommand).toBeCalled()
+        })
+      })
+
       describe('Print', () => {
         it('triggers window.print() with delay', () => {
           const print = findMenuItem(
