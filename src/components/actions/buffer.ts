@@ -1,26 +1,29 @@
 import { connect } from 'unistore/preact'
 import { GlobalStore } from '../app'
+import { ConnectedActions } from './utils'
 
-interface Actions {
+export interface BufferActions {
   newCommand: () => void
   updateBuffer: (buffer: string) => void
 }
 
-export default connect<
-  Partial<Pick<GlobalStore, 'buffer' | 'bufferChanged'>>,
-  any,
-  Partial<GlobalStore>,
-  Actions
->(
-  'buffer,bufferChanged',
-  () => ({
-    newCommand: ({ bufferChanged }) => {
-      if (bufferChanged) {
-        if (!window.confirm('Are you sure? Your changed buffer will be lost.'))
-          return {}
-      }
+const actions: ConnectedActions<GlobalStore, BufferActions> = () => ({
+  newCommand: ({ bufferChanged }) => {
+    if (
+      !bufferChanged ||
+      window.confirm('Are you sure? Your changed buffer will be lost.')
+    )
       return { buffer: '', bufferChanged: false }
-    },
-    updateBuffer: (_, buffer: string) => ({ buffer, bufferChanged: true }),
-  })
+  },
+  updateBuffer: (_, buffer) => ({ buffer, bufferChanged: true }),
+})
+
+export default connect<
+  Partial<Pick<GlobalStore, 'buffer'>>,
+  any,
+  GlobalStore,
+  BufferActions
+>(
+  'buffer',
+  actions
 )
