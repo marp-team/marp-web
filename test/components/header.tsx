@@ -11,7 +11,7 @@ afterEach(() => jest.restoreAllMocks())
 
 describe('<Header />', () => {
   const header = (props = {}) =>
-    deep(<Header newCommand={jest.fn()} {...props} />)
+    deep(<Header newCommand={jest.fn()} openCommand={jest.fn()} {...props} />)
 
   it('renders <header> element', () =>
     expect(header().find('header')).toHaveLength(1))
@@ -81,6 +81,22 @@ describe('<Header />', () => {
 
           jest.runOnlyPendingTimers()
           expect(newCommand).toBeCalled()
+        })
+      })
+
+      describe('Open', () => {
+        it('triggers passed openCommand action with delay', () => {
+          const openCommand = jest.fn()
+          const openMenu = findMenuItem(
+            component({ openCommand }),
+            elm => elm.text() === 'Open...'
+          )
+          expect(openMenu).toHaveLength(1)
+
+          openMenu.simulate('click')
+
+          jest.runOnlyPendingTimers()
+          expect(openCommand).toBeCalled()
         })
       })
 

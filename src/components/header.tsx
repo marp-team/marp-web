@@ -12,20 +12,17 @@ import style from './style/header.module.scss'
 
 const { h } = preact
 
-const appButton = ({ props }) => (
-  <HeaderButton class={style.appButton} {...props} />
-)
-
+const app = ({ props }) => <HeaderButton class={style.appButton} {...props} />
 const lazy = (func: () => void): (() => void) => () => setTimeout(func, 16)
 const print = lazy(() => window.print())
 
-export const Header = ({ newCommand }) => (
+export const Header = ({ newCommand, openCommand }) => (
   <header class={style.header}>
-    <Dropdown button={appButton}>
+    <Dropdown button={app}>
       <DropdownMenu>
         <DropdownItem onClick={lazy(newCommand)}>New</DropdownItem>
         <DropdownDivider />
-        <DropdownItem>Open...</DropdownItem>
+        <DropdownItem onClick={lazy(openCommand)}>Open...</DropdownItem>
         <DropdownItem>Save</DropdownItem>
         <DropdownDivider />
         <DropdownItem onClick={print}>
