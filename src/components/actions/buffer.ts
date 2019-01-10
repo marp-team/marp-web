@@ -5,6 +5,7 @@ import { ConnectedActions } from './utils'
 export interface BufferActions {
   newCommand: () => void
   openCommand: () => void
+  saveCommand: () => void
   updateBuffer: (buffer: string) => void
 }
 
@@ -40,6 +41,22 @@ const actions: ConnectedActions<GlobalStore, BufferActions> = store => ({
       reader.readAsText(file)
     })
     input.click()
+  },
+  saveCommand: ({ buffer }) => {
+    const bufferURL = URL.createObjectURL(
+      new Blob([buffer], { type: 'text/markdown' })
+    )
+    const link = document.createElement('a')
+
+    link.href = bufferURL
+    link.download = 'untitled.md'
+    link.style.display = 'none'
+
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+
+    setTimeout(() => URL.revokeObjectURL(bufferURL), 3000)
   },
   updateBuffer: (_, buffer) => ({ buffer, bufferChanged: true }),
 })

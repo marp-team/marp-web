@@ -14,18 +14,17 @@ const { h } = preact
 
 const app = ({ props }) => <HeaderButton class={style.appButton} {...props} />
 const lazy = (func: () => void): (() => void) => () => setTimeout(func, 16)
-const print = lazy(() => window.print())
 
-export const Header = ({ newCommand, openCommand }) => (
+export const Header = ({ newCommand, openCommand, saveCommand }) => (
   <header class={style.header}>
     <Dropdown button={app}>
       <DropdownMenu>
         <DropdownItem onClick={lazy(newCommand)}>New</DropdownItem>
         <DropdownDivider />
         <DropdownItem onClick={lazy(openCommand)}>Open...</DropdownItem>
-        <DropdownItem>Save</DropdownItem>
+        <DropdownItem onClick={lazy(saveCommand)}>Save</DropdownItem>
         <DropdownDivider />
-        <DropdownItem onClick={print}>
+        <DropdownItem onClick={lazy(() => window.print())}>
           Print
           {isChrome() && ' / Export to PDF'}
           ...
