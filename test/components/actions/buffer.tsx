@@ -40,11 +40,12 @@ describe('Actions for buffer', () => {
           .spyOn(window, 'confirm')
           .mockImplementation(() => true)
 
-        const base = store({ buffer: 'contents', bufferChanged: true })
+        const base = store({ buffer: 'c', bufferChanged: true, fileName: 'f' })
 
         actions(base).newCommand()
         expect(confirm).toBeCalledTimes(1)
         expect(base.getState().buffer).toBe('')
+        expect(base.getState().fileName).toBe('')
       })
 
       it('does not clear buffer store when confirm was canceled', () => {
@@ -52,11 +53,11 @@ describe('Actions for buffer', () => {
           .spyOn(window, 'confirm')
           .mockImplementation(() => false)
 
-        const base = store({ buffer: 'contents', bufferChanged: true })
+        const base = store({ buffer: 'c', bufferChanged: true, fileName: 'f' })
 
         actions(base).newCommand()
         expect(confirm).toBeCalledTimes(1)
-        expect(base.getState().buffer).toBe('contents')
+        expect(base.getState().buffer).toBe('c')
       })
     })
   })
@@ -83,6 +84,7 @@ describe('Actions for buffer', () => {
         expect(setState).toBeCalledWith({
           buffer: 'TEXT CONTENT',
           bufferChanged: false,
+          fileName: 'test.md',
         })
         done()
       })
@@ -114,17 +116,11 @@ describe('Actions for buffer', () => {
   })
 
   describe('#updateBuffer', () => {
-    it('updates buffer store to passed value', () => {
+    it('updates buffer store and bufferChanged store', () => {
       const base = store()
-
       actions(base).updateBuffer('updated')
+
       expect(base.getState().buffer).toBe('updated')
-    })
-
-    it('updates bufferChanged store to true', () => {
-      const base = store()
-
-      actions(base).updateBuffer('test')
       expect(base.getState().bufferChanged).toBe(true)
     })
   })
