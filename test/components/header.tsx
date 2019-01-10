@@ -11,7 +11,7 @@ afterEach(() => jest.restoreAllMocks())
 
 describe('<Header />', () => {
   const header = (props = {}) =>
-    deep(<Header newCommand={jest.fn()} {...props} />)
+    deep(<Header newCommand={jest.fn()} openCommand={jest.fn()} {...props} />)
 
   it('renders <header> element', () =>
     expect(header().find('header')).toHaveLength(1))
