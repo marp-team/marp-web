@@ -10,7 +10,8 @@ jest.mock('../../src/marp/worker-wrapper')
 afterEach(() => jest.restoreAllMocks())
 
 describe('<Preview />', () => {
-  const preview = (props: any = {}) => deep(<Preview buffer="" {...props} />)
+  const preview = (props: any = {}) =>
+    deep(<Preview buffer="" updateBuffer={jest.fn()} {...props} />)
 
   it('renders <MarpEditor>', () =>
     expect(preview().find(<MarpEditor value="" />)).toHaveLength(1))
@@ -29,13 +30,13 @@ describe('<Preview />', () => {
     const textarea = (cmp: FindWrapper<any, any>): FindWrapper<any, any> =>
       cmp.find(<MarpEditor value="" />).find('textarea')
 
-    it('calls handleInput action', () => {
-      const handleInput = jest.fn()
-      const component = preview({ handleInput })
+    it('calls updateBuffer action', () => {
+      const updateBuffer = jest.fn()
+      const component = preview({ updateBuffer })
       const event = { target: { value: 'updated' } }
 
       textarea(component).simulate('input', event)
-      expect(handleInput).toBeCalledWith(expect.objectContaining(event))
+      expect(updateBuffer).toBeCalledWith('updated')
     })
   })
 })

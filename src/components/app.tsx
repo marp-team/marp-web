@@ -16,8 +16,12 @@ export interface GlobalStore {
 }
 
 // Global store
-const store: Store<GlobalStore> = (() => {
-  let store = createStore({ buffer: '', bufferChanged: false })
+export const store = (initialStore: Partial<GlobalStore> = {}) => {
+  let store: Store<GlobalStore> = createStore({
+    buffer: '',
+    bufferChanged: false,
+    ...initialStore,
+  })
 
   persistStore(store, localStorageAdapter(), {
     map: ({ buffer, bufferChanged }) => ({ buffer, bufferChanged }),
@@ -25,11 +29,11 @@ const store: Store<GlobalStore> = (() => {
 
   if (process.env.NODE_ENV === 'development') store = devtools(store)
   return store
-})()
+}
 
 export default () => {
   return (
-    <Provider store={store}>
+    <Provider store={store()}>
       <div class={style.app}>
         <Header />
         <Preview />
