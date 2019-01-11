@@ -12,7 +12,9 @@ import style from './style/header.module.scss'
 
 const { h } = preact
 
-const app = ({ props }) => <HeaderButton class={style.appButton} {...props} />
+const app = ({ props }) => (
+  <HeaderButton aria-label="Main menu" class={style.appButton} {...props} />
+)
 const lazy = (func: () => void): (() => void) => () => setTimeout(func, 16)
 const print = lazy(() => window.print())
 

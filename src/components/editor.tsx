@@ -11,7 +11,11 @@ export interface EditorProps {
 }
 
 const Editor: preact.FunctionalComponent<EditorProps> = props => (
-  <textarea {...combineClass(props, style.editor)} onInput={props.onInput}>
+  <textarea
+    {...combineClass(props, style.editor)}
+    aria-label="Editor"
+    onInput={props.onInput}
+  >
     {props.value}
   </textarea>
 )
