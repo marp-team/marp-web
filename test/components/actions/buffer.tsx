@@ -6,8 +6,12 @@ import bufferActions, {
 import { store } from '../../../src/components/app'
 
 jest.mock('unissist')
+jest.useFakeTimers()
 
-afterEach(() => jest.restoreAllMocks())
+afterEach(() => {
+  jest.clearAllTimers()
+  jest.restoreAllMocks()
+})
 
 describe('Actions for buffer', () => {
   const actions = (baseStore = store()) => {
@@ -111,6 +115,55 @@ describe('Actions for buffer', () => {
         actions(store({ bufferChanged: true })).openCommand()
         expect(confirm).toBeCalledTimes(1)
         expect(open).not.toBeCalled()
+      })
+    })
+  })
+
+  describe('#saveCommand', () => {
+    let click: jest.SpyInstance<any>
+
+    beforeEach(() => {
+      click = jest.spyOn(HTMLAnchorElement.prototype, 'click')
+      URL.createObjectURL = jest.fn(() => 'about:blank')
+      URL.revokeObjectURL = jest.fn()
+    })
+
+    it('downloads blob created from buffer with current filename', () => {
+      const base = store({
+        buffer: 'content',
+        bufferChanged: true,
+        fileName: 'file.md',
+      })
+
+      actions(base).saveCommand()
+
+      expect(click).toBeCalledTimes(1)
+      expect(URL.createObjectURL).toBeCalledTimes(1)
+
+      const blob: Blob = (URL.createObjectURL as jest.Mock).mock.calls[0][0]
+      expect(blob.size).toBe(7) // 'content'
+      expect(blob.type).toBe('text/markdown')
+
+      const link: HTMLAnchorElement = click.mock.instances[0]
+      expect(link.href).toBe('about:blank')
+      expect(link.download).toBe('file.md')
+
+      // Update changed state after save
+      expect(base.getState().bufferChanged).toBe(false)
+
+      // Clean-up created URL (Requires lazy execution to support Safari)
+      jest.runOnlyPendingTimers()
+      expect(URL.revokeObjectURL).toBeCalledWith('about:blank')
+    })
+
+    context('when fileName store is empty', () => {
+      const base = store({ fileName: '' })
+
+      it('downloads with named as untitled.md', () => {
+        actions(base).saveCommand()
+
+        expect(click.mock.instances[0].download).toBe('untitled.md')
+        expect(base.getState().fileName).toBe('untitled.md')
       })
     })
   })
