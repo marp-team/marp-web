@@ -6,13 +6,17 @@ import bufferActions, {
 import { store } from '../../../src/components/app'
 
 jest.mock('unissist')
+jest.useFakeTimers()
 
-afterEach(() => jest.restoreAllMocks())
+afterEach(() => {
+  jest.clearAllTimers()
+  jest.restoreAllMocks()
+})
 
 describe('Actions for buffer', () => {
   const actions = (baseStore = store()) => {
     const child = jest.fn()
-    const ConnectedChild = bufferActions(child)
+    const ConnectedChild = bufferActions()(child)
 
     render(
       <Provider store={baseStore}>
@@ -40,11 +44,12 @@ describe('Actions for buffer', () => {
           .spyOn(window, 'confirm')
           .mockImplementation(() => true)
 
-        const base = store({ buffer: 'contents', bufferChanged: true })
+        const base = store({ buffer: 'c', bufferChanged: true, fileName: 'f' })
 
         actions(base).newCommand()
         expect(confirm).toBeCalledTimes(1)
         expect(base.getState().buffer).toBe('')
+        expect(base.getState().fileName).toBe('')
       })
 
       it('does not clear buffer store when confirm was canceled', () => {
@@ -52,11 +57,11 @@ describe('Actions for buffer', () => {
           .spyOn(window, 'confirm')
           .mockImplementation(() => false)
 
-        const base = store({ buffer: 'contents', bufferChanged: true })
+        const base = store({ buffer: 'c', bufferChanged: true, fileName: 'f' })
 
         actions(base).newCommand()
         expect(confirm).toBeCalledTimes(1)
-        expect(base.getState().buffer).toBe('contents')
+        expect(base.getState().buffer).toBe('c')
       })
     })
   })
@@ -83,6 +88,7 @@ describe('Actions for buffer', () => {
         expect(setState).toBeCalledWith({
           buffer: 'TEXT CONTENT',
           bufferChanged: false,
+          fileName: 'test.md',
         })
         done()
       })
@@ -113,18 +119,61 @@ describe('Actions for buffer', () => {
     })
   })
 
-  describe('#updateBuffer', () => {
-    it('updates buffer store to passed value', () => {
-      const base = store()
+  describe('#saveCommand', () => {
+    let click: jest.SpyInstance<any>
 
-      actions(base).updateBuffer('updated')
-      expect(base.getState().buffer).toBe('updated')
+    beforeEach(() => {
+      click = jest.spyOn(HTMLAnchorElement.prototype, 'click')
+      URL.createObjectURL = jest.fn(() => 'about:blank')
+      URL.revokeObjectURL = jest.fn()
     })
 
-    it('updates bufferChanged store to true', () => {
-      const base = store()
+    it('downloads blob created from buffer with current filename', () => {
+      const base = store({
+        buffer: 'content',
+        bufferChanged: true,
+        fileName: 'file.md',
+      })
 
-      actions(base).updateBuffer('test')
+      actions(base).saveCommand()
+
+      expect(click).toBeCalledTimes(1)
+      expect(URL.createObjectURL).toBeCalledTimes(1)
+
+      const blob: Blob = (URL.createObjectURL as jest.Mock).mock.calls[0][0]
+      expect(blob.size).toBe(7) // 'content'
+      expect(blob.type).toBe('text/markdown')
+
+      const link: HTMLAnchorElement = click.mock.instances[0]
+      expect(link.href).toBe('about:blank')
+      expect(link.download).toBe('file.md')
+
+      // Update changed state after save
+      expect(base.getState().bufferChanged).toBe(false)
+
+      // Clean-up created URL (Requires lazy execution to support Safari)
+      jest.runOnlyPendingTimers()
+      expect(URL.revokeObjectURL).toBeCalledWith('about:blank')
+    })
+
+    context('when fileName store is empty', () => {
+      const base = store({ fileName: '' })
+
+      it('downloads with named as untitled.md', () => {
+        actions(base).saveCommand()
+
+        expect(click.mock.instances[0].download).toBe('untitled.md')
+        expect(base.getState().fileName).toBe('untitled.md')
+      })
+    })
+  })
+
+  describe('#updateBuffer', () => {
+    it('updates buffer store and bufferChanged store', () => {
+      const base = store()
+      actions(base).updateBuffer('updated')
+
+      expect(base.getState().buffer).toBe('updated')
       expect(base.getState().bufferChanged).toBe(true)
     })
   })

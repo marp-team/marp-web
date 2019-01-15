@@ -1,12 +1,15 @@
 import * as preact from 'preact'
-import bufferActions from './actions/buffer'
+import connectBufferActions, { ConnectableChild } from './actions/buffer'
 import style from './style/preview.module.scss'
 import { MarpEditor } from './editor'
 import { MarpPreview } from './marp'
 
 const { h } = preact
 
-export const Preview = ({ buffer, updateBuffer }: any) => {
+export const Preview: ConnectableChild<'buffer'> = ({
+  buffer,
+  updateBuffer,
+}) => {
   const handleInput = e => updateBuffer(e.target.value)
 
   return (
@@ -17,4 +20,4 @@ export const Preview = ({ buffer, updateBuffer }: any) => {
   )
 }
 
-export default bufferActions(Preview)
+export default connectBufferActions('buffer')(Preview)

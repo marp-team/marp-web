@@ -13,6 +13,7 @@ const { h } = preact
 export interface GlobalStore {
   buffer: string
   bufferChanged: boolean
+  fileName: string
 }
 
 // Global store
@@ -20,12 +21,11 @@ export const store = (initialStore: Partial<GlobalStore> = {}) => {
   let store: Store<GlobalStore> = createStore({
     buffer: '',
     bufferChanged: false,
+    fileName: '',
     ...initialStore,
   })
 
-  persistStore(store, localStorageAdapter(), {
-    map: ({ buffer, bufferChanged }) => ({ buffer, bufferChanged }),
-  })
+  persistStore(store, localStorageAdapter())
 
   if (process.env.NODE_ENV === 'development') store = devtools(store)
   return store

@@ -10,8 +10,7 @@ beforeEach(() => jest.spyOn(console, 'warn').mockImplementation())
 afterEach(() => jest.restoreAllMocks())
 
 describe('<Header />', () => {
-  const header = (props = {}) =>
-    deep(<Header newCommand={jest.fn()} openCommand={jest.fn()} {...props} />)
+  const header = (props: any = {}) => deep(<Header {...props} />)
 
   it('renders <header> element', () =>
     expect(header().find('header')).toHaveLength(1))
