@@ -6,6 +6,8 @@
 
 A web interface of Marp.
 
+### :warning: Currently Marp Web is under developing and not ready to use stably.
+
 ## Author
 
 Managed by [@marp-team](https://github.com/marp-team).
