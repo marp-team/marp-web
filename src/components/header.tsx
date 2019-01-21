@@ -15,7 +15,7 @@ const { h } = preact
 const app = ({ props }) => (
   <HeaderButton aria-label="Main menu" class={style.appButton} {...props} />
 )
-const lazy = (func: () => void): (() => void) => () => setTimeout(func, 16)
+const lazy = (func: () => void): VoidFunction => () => setTimeout(func, 16)
 
 export const Header: ConnectableChild = ({
   newCommand,
