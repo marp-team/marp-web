@@ -26,7 +26,7 @@ describe('Marp worker', () => {
       )
 
       // Callback function is triggered instance's #onMessage (private)
-      const [, func] = worker.addEventListener.mock.calls[0]
+      const func: any = worker.addEventListener.mock.calls[0][1]
       const messageSpy = jest.spyOn(instance, 'onMessage').mockImplementation()
 
       func({ data: ['abc'] })
@@ -54,7 +54,7 @@ describe('Marp worker', () => {
 
         const marp = mw.instances.get('test')
         const marpRender = jest
-          .spyOn(marp!, 'render')
+          .spyOn<any, any>(marp, 'render')
           .mockImplementation(() => 'ret')
 
         post(mw, 'render', 'test', '# Markdown')

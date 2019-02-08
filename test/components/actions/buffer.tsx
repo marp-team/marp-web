@@ -67,7 +67,7 @@ describe('Actions for buffer', () => {
   })
 
   describe('#openCommand', () => {
-    let open: jest.SpyInstance<HTMLInputElement['click']>
+    let open: jest.SpyInstance
     beforeEach(() => (open = jest.spyOn(HTMLInputElement.prototype, 'click')))
 
     it('updates buffer store to passed value', done => {
@@ -81,7 +81,7 @@ describe('Actions for buffer', () => {
       const input: HTMLInputElement = spy.mock.results[0].value
 
       jest
-        .spyOn(input, 'files', 'get')
+        .spyOn<HTMLInputElement, any>(input, 'files', 'get')
         .mockImplementation(() => [new File(['TEXT CONTENT'], 'test.md')])
 
       const setState = jest.spyOn(base, 'setState').mockImplementation(() => {
