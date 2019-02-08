@@ -6,6 +6,8 @@
   }
 
   &-slide-container {
+    all: initial;
+
     > svg {
       display: block;
       transform: translateZ(0); // rendering hack

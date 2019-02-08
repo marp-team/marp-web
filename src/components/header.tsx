@@ -17,7 +17,9 @@ const app = ({ props }) => (
 )
 const lazy = (func: () => void): VoidFunction => () => setTimeout(func, 16)
 
-export const Header: ConnectableChild = ({
+export const Header: ConnectableChild<'bufferChanged' | 'fileName'> = ({
+  bufferChanged,
+  fileName,
   newCommand,
   openCommand,
   saveCommand,
@@ -37,7 +39,19 @@ export const Header: ConnectableChild = ({
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>
+    <div
+      class={[
+        style.file,
+        bufferChanged && style.fileChanged,
+        fileName ? '' : style.fileUntitled,
+      ]
+        .filter(c => c)
+        .join(' ')}
+    >
+      <span class={style.fileName}>{fileName || '(untitled)'}</span>
+      <span class={style.fileIndicator}>*</span>
+    </div>
   </header>
 )
 
-export default connectBufferActions()(Header)
+export default connectBufferActions('bufferChanged', 'fileName')(Header)

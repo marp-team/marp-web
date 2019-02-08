@@ -18,3 +18,29 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.file {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  line-height: 50px;
+  text-align: center;
+
+  &-indicator {
+    color: #d10202;
+    font-size: smaller;
+    padding: 0 0 0 0.25em;
+    vertical-align: super;
+    visibility: hidden;
+  }
+
+  &-untitled {
+    color: #ccc;
+  }
+
+  &-changed {
+    .file-indicator {
+      visibility: visible;
+    }
+  }
+}
