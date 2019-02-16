@@ -7,7 +7,21 @@
 
 A web interface of Marp.
 
-### :warning: Currently Marp Web is under developing and not ready to use stably.
+### :warning: Currently Marp Web is under developing.
+
+> https://web.marp.app/ is a tech demo. In future, we migrate to React app based on our [marp-react](https://github.com/marp-team/marp-react).
+>
+> We are using [Preact](https://github.com/developit/preact) and it has an advantage to PWA. But I'm not sure to be recieved contributes from community because not of familiar framework. In addition, well-maintained library for React would get better developer experience.
+
+## Desktop PWA
+
+Would you try the future of Marp? By using Chrome's [Desktop PWA](https://developers.google.com/web/progressive-web-apps/desktop), you can use Marp Web as a desktop app like [yhatt/marp](https://github.com/yhatt/marp).
+
+1. Enable **Desktop PWAs** experiments from [chrome://flags/#enable-desktop-pwas](chrome://flags/#enable-desktop-pwas)
+2. Relaunch Chrome and access to https://web.marp.app/
+3. Select **"Install Marp..."** from Chrome menu.
+
+![](desktop-pwa.png)
 
 ## Author
 
