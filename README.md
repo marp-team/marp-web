@@ -15,13 +15,13 @@ A web interface of Marp.
 
 ## Desktop PWA
 
-Would you try the future of Marp? By using Chrome's [Desktop PWA](https://developers.google.com/web/progressive-web-apps/desktop), you can use Marp Web as a desktop app like [yhatt/marp](https://github.com/yhatt/marp).
+Would you try the future of Marp? By using Chrome's [Desktop PWA](https://developers.google.com/web/progressive-web-apps/desktop), you can use Marp Web as a desktop app like [yhatt/marp](https://github.com/yhatt/marp). Select **"Install Marp..."** from Chrome menu.
 
-1. Enable **Desktop PWAs** experiments from [chrome://flags/#enable-desktop-pwas](chrome://flags/#enable-desktop-pwas)
-2. Relaunch Chrome and access to https://web.marp.app/
-3. Select **"Install Marp..."** from Chrome menu.
+[![](desktop-pwa-install.png)](https://web.marp.app/)
 
-![](desktop-pwa.png)
+Of course, an installed Marp Web works even if the network is offline. (Except external resources in the slide deck)
+
+[![](desktop-pwa.png)](https://web.marp.app/)
 
 ## Author
 
