@@ -10,10 +10,13 @@ module.exports = env => {
     {
       loader: 'css-loader',
       options: {
-        modules,
-        camelCase: 'only',
         importLoaders: 2,
-        localIdentName: '[hash:base64:5]',
+        ...(modules
+          ? {
+              modules: { localIdentName: '[hash:base64:5]' },
+              localsConvention: 'camelCaseOnly',
+            }
+          : {}),
       },
     },
     'postcss-loader',
