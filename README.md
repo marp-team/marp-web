@@ -7,7 +7,7 @@
 
 A web interface of Marp.
 
-### :warning: Currently Marp Web is under developing.
+### :warning: Currently Marp Web is inactive.
 
 > https://web.marp.app/ is a tech demo. In future, we migrate to React app based on our [marp-react](https://github.com/marp-team/marp-react).
 >
